@@ -8,7 +8,7 @@ let mapleader="," " leader is comma
 filetype plugin on
 
 " THEME & LAYOUT
-colorscheme material
+colorscheme badwolf
 set number relativenumber  " show hybrid line numbers
 set showcmd " show last command in bottom bar
 set cursorline " highlight current line
