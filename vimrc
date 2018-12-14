@@ -1,38 +1,47 @@
-" LOADING
-execute pathogen#infect()
-
-" LEADER
-let mapleader="," " leader is comma
-
-" FILETYPE PLUGINS
+" Phillip Vo
+" LOADING {{{
+        execute pathogen#infect()
+                " }}}
+                " LEADER {{{
+                        let mapleader="," " leader is comma
+" }}}
+" FILETYPE PLUGINS {{{
 filetype plugin on
-
-" THEME & LAYOUT
+" }}}
+" THEME & LAYOUT {{{
 colorscheme badwolf
 set number relativenumber  " show hybrid line numbers
 set showcmd " show last command in bottom bar
 set cursorline " highlight current line
 syntax enable " enable syntax processing
-
+" }}}
+" MISC {{{
 set wildmenu " visual autocomplete for command menu
 set lazyredraw " redraw only when we need to
 set showmatch " highlight matching [{()}]
 
-" SEARCHING
+set modelines=1
+
+" jk is escape (only for insert mode)
+inoremap jk <esc>
+inoremap JK <esc>
+" }}}
+" SEARCHING {{{
 set incsearch
 set hlsearch
 nnoremap <leader><space> :nohlsearch<CR>
-
-" TEXT FORMATTING
+" }}}
+" TEXT FORMATTING {{{
 set tabstop=4
 set softtabstop=4
 set expandtab
 set autoindent
-
-" NAVIGATING
+" }}}
+" NAVIGATING {{{
 " move vertically by visual line (only in normal mode)
 nnoremap j gj
 nnoremap k gk
+
 " disable arrow keys
 noremap <Up> <NOP>
 noremap <Down> <NOP>
@@ -48,27 +57,27 @@ nnoremap <C-h> <C-w><C-h>
 nnoremap <C-l> <C-w><C-l>
 nnoremap <C-j> <C-w><C-j>
 nnoremap <C-k> <C-w><C-k>
-
-" jk is escape (only for insert mode)
-inoremap jk <esc>
-inoremap JK <esc>
-
-" FOLDING
+" }}}
+" FOLDING {{{
 set foldenable
+set foldmethod=indent
 set foldlevelstart=10
 set foldnestmax=10
+
 " space open/closes folds
 nnoremap <space> za
-
-" FZF
+" }}}
+" FZF {{{
 map ; :FZF<CR>
-
-" GITGUTTER
+" }}}
+" GITGUTTER {{{
 set updatetime=100
 nnoremap <leader>g :GitGutterToggle
-
-" ALE
+" }}}
+" ALE {{{
 nnoremap <leader>a :ALEDetail<CR>
-
-" VIMRC
+" }}}
+" VIMRC {{{
 nnoremap <leader>s :source ~/.vimrc<CR>
+" }}}
+" vim:foldmethod=marker:foldlevel=0
