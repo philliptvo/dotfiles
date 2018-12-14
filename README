@@ -2,10 +2,6 @@ Installation:
 
     git clone git@github.com:philliptvo/dotfiles.git
     cd dotfiles
-    ./install.sh
-
-Switch to the `~/.vim` directory, and fetch submodules:
-
-    cd ~/.vim
     git submodule init
     git submodule update
+    ./install.sh
