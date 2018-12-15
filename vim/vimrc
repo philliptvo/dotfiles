@@ -1,9 +1,10 @@
 " Phillip Vo
+
 " LOADING {{{
-        execute pathogen#infect()
-                " }}}
-                " LEADER {{{
-                        let mapleader="," " leader is comma
+execute pathogen#infect()
+" }}}
+" LEADER {{{
+let mapleader="," " leader is comma
 " }}}
 " FILETYPE PLUGINS {{{
 filetype plugin on
@@ -20,6 +21,7 @@ set wildmenu " visual autocomplete for command menu
 set lazyredraw " redraw only when we need to
 set showmatch " highlight matching [{()}]
 
+set modeline
 set modelines=1
 
 " jk is escape (only for insert mode)
@@ -80,4 +82,5 @@ nnoremap <leader>a :ALEDetail<CR>
 " VIMRC {{{
 nnoremap <leader>s :source ~/.vimrc<CR>
 " }}}
+
 " vim:foldmethod=marker:foldlevel=0
