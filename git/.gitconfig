@@ -1,0 +1,15 @@
+[user]
+  name = Phillip Vo
+  email = phillip.t.vo@gmail.com
+
+[core]
+  editor = vim
+
+[alias]
+  amend = commit --amend --reuse-message=HEAD
+  br = branch
+  ci = commit
+  co = checkout
+  df = diff
+  g = grep
+  p = push
