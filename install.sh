@@ -1,7 +1,31 @@
 #!/usr/bin/env bash
 
-[[ -L "${HOME}/.vimrc" ]] && rm "${HOME}/.vimrc"
-[[ -d "${HOME}/.vim" ]] && rm -rf "${HOME}/.vim"
+set -ex
 
-cp -r vim "${HOME}/.vim"
-ln -s "${HOME}/.vimrc/vimrc" "${HOME}/.vimrc"
+# Copy config files in subdirectories
+cp_configs() {
+  for config in ${1}.[^.]*; do
+    targetfile="${HOME}/$(basename ${config})"
+
+    # clean up existing links
+    [ -f $targetfile ] && rm $targetfile
+    cp $config $targetfile
+  done
+}
+
+set_up() {
+  for file in */;  do
+    # copy to home directory if force token exists
+    if [ -f ${file}force ]; then
+    # clean up directory if it already exists
+    targetpath="${HOME}/.${file}"
+    [ -d $targetpath ] && rm -rf $targetpath
+
+    cp -r $file $targetpath
+    fi
+
+    cp_configs $file
+  done
+}
+
+set_up

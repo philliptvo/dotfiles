@@ -36,6 +36,7 @@ nnoremap <leader><space> :nohlsearch<CR>
 " TEXT FORMATTING {{{
 set tabstop=4
 set softtabstop=4
+set shiftwidth=4
 set expandtab
 set autoindent
 " }}}
