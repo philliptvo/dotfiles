@@ -6,6 +6,7 @@
   editor = vim
 
 [alias]
+  aa = add --all
   amend = commit --amend --reuse-message=HEAD
   br = branch
   ci = commit
@@ -13,3 +14,4 @@
   df = diff
   g = grep
   p = push
+  st = status
