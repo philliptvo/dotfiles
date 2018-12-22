@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-set -ex
+set -e
+
+DOTFILES_DIR=$(dirname $(readlink -f $0))
 
 # sym link config files in subdirectories
 symlink() {
@@ -38,7 +40,7 @@ main() {
     if [ -f ${file}.cp ]; then
       cp_config $file
     else
-      symlink $file
+      symlink ${DOTFILES_DIR}/${file}
     fi
   done
 }

@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+if [ -x /usr/bin/dircolors ]; then
+  alias ls='ls --color=auto'
+  alias grep='grep --color=auto'
+  alias fgrep='fgrep --color=auto'
+  alias egrep='egrep --color=auto'
+fi
+
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls =CF'
+
+alias open='xdg-open'
+
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias -- -='cd -'
+
+alias g='git'
+
+alias ni='npm install'
+alias nu='npm uninstall'
+alias nup='npm update'
+alias nri='rm -r node_modules && npm install'
+alias ncd='npm-check -su'

@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+ps0() {
+  unset PROMPT_COMMAND
+  PS1='$ '
+}
+
+ps1() {
+  source "$DOTFILES_DIR"/system/.prompt
+}
+
+mk() {
+  mkdir -p "$@" && cd "$@"
+}
