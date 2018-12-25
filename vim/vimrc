@@ -55,11 +55,21 @@ noremap <Right> <NOP>
 " nnoremap $ <nop>
 " nnoremap ^ <nop>
 
-" switch tabs
-nnoremap <C-h> <C-w><C-h>
-nnoremap <C-l> <C-w><C-l>
-nnoremap <C-j> <C-w><C-j>
-nnoremap <C-k> <C-w><C-k>
+" Quickfix
+nnoremap ]q :cnext<cr>zz
+nnoremap [q :cprev<cr>zz
+
+" Buffers
+nnoremap ]b :bnext<cr>
+nnoremap [b :bprev<cr>
+
+" Tabs
+nnoremap ]t :tabn<cr>
+nnoremap [t :tabp<cr>
+
+" <tab> / <s-tab> | Circular windows navigation
+nnoremap <tab>   <c-w>w
+nnoremap <S-tab> <c-w>W
 " }}}
 " FOLDING {{{
 set foldenable
