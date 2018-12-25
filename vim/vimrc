@@ -80,6 +80,36 @@ set foldnestmax=10
 " space open/closes folds
 nnoremap <space> za
 " }}}
+" FILETYPES {{{
+augroup filetypes
+    au!
+
+    au BufNewFile,BufRead *.md setlocal ft=markdown
+
+    au FileType html,xhtml,xml,css setlocal ts=2 sts=2 sw=2 et ai
+    au FileType javascript setlocal ts=2 sts=2 sw=2 et ai si noci 
+    au FileType python setlocal ts=4 sts=4 sw=4 et ai si cinwords=if,elif,else,for,while,try,except,finally,def
+
+    au FileType markdown setlocal syn=off
+    au FileType python setlocal foldmethod=indent foldlevel=99
+augroup END
+" }}}
+" FUNCTIONS {{{
+function! UnderlineHeading(level)
+    if a:level == 1
+        normal! yypVr=
+    elseif a:level == 2
+        normal! yypVr-
+    else
+        normal I##<space>
+    endif
+endfunction
+
+nnoremap <leader>u1 :call UnderlineHeading(1)<CR>
+nnoremap <leader>u2 :call UnderlineHeading(2)<CR>
+nnoremap <leader>u3 :call UnderlineHeading(3)<CR>
+
+" }}}
 " FZF {{{
 map ; :FZF<CR>
 " }}}
