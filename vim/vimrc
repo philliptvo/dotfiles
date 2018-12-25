@@ -115,7 +115,7 @@ map ; :FZF<CR>
 " }}}
 " GITGUTTER {{{
 set updatetime=100
-nnoremap <leader>g :GitGutterToggle
+nnoremap <leader>g :GitGutterToggle<cr>
 " }}}
 " ALE {{{
 nnoremap <leader>a :ALEDetail<CR>
