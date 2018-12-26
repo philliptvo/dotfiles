@@ -7,7 +7,6 @@
 
 [alias]
   aa = add --all
-  amend = commit --amend --reuse-message=HEAD
   br = branch
   ci = commit
   co = checkout
