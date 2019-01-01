@@ -6,5 +6,12 @@ Installation
 ============
     git clone git@github.com:philliptvo/dotfiles.git
     cd dotfiles
-    git submodule update --init
     ./install.sh
+
+Vim Plugins
+===========
+To install:
+    vim +PlugInstall
+
+Update plugins:
+    vim +PlugUpdate

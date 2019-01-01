@@ -1,7 +1,20 @@
 " Phillip Vo
 
 " LOADING {{{
-execute pathogen#infect()
+
+" Plugins
+call plug#begin('~/.vim/plugged')
+
+Plug 'w0rp/ale'
+Plug 'ervandew/supertab'
+Plug 'bronson/vim-trailing-whitespace'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': '.install --all' }
+
+call plug#end()
 " }}}
 " LEADER {{{
 let mapleader="," " leader is comma
