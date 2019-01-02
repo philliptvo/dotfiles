@@ -7,11 +7,12 @@ DOTFILES_DIR=$(dirname $(readlink -f $0))
 # sym link config files in subdirectories
 symlink() {
   for config in ${1}*; do
-    if [ -f $config ]; then
+    if [ -f ${config} ]; then
       targetfile="${HOME}/.$(basename ${config})"
       # clean up existing links
-      [ -L $targetfile ] && rm $targetfile
-      ln -s $config $targetfile
+      [ -L ${targetfile} ] && rm ${targetfile}
+      [ -f ${targetfile} ] && mv ${targetfile} ${targetfile}.old
+      ln -s ${config} ${targetfile}
     fi
   done
 }
@@ -22,8 +23,8 @@ main() {
     if [ ! -f ${file}.ignore ]; then
       # clean up directory if it already exists
       targetpath="${HOME}/.${file}"
-      [ -d $targetpath ] && rm -rf $targetpath
-      cp -r $file $targetpath
+      [ -d ${targetpath} ] && rm -rf ${targetpath}
+      cp -r ${file} ${targetpath}
     fi
 
   symlink ${DOTFILES_DIR}/${file}
