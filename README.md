@@ -11,7 +11,9 @@ Installation
 Vim Plugins
 ===========
 To install:
+
     vim +PlugInstall
 
 Update plugins:
+
     vim +PlugUpdate
