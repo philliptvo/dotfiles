@@ -17,7 +17,7 @@ symlink() {
   done
 }
 
-main() {
+setup_configs() {
   for file in */;  do
     # copy to home directory if force token exists
     if [ ! -f ${file}.ignore ]; then
@@ -31,4 +31,4 @@ main() {
   done
 }
 
-main
+setup_configs
