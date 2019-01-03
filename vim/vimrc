@@ -117,7 +117,7 @@ function! UnderlineHeading(level)
     elseif a:level == 2
         normal! yypVr-
     else
-        normal I##<space>
+        normal! I### 
     endif
 endfunction
 
