@@ -2,7 +2,13 @@
 
 set -e
 
-DOTFILES_DIR=$(dirname $(readlink -f $0))
+if [ "$(dirname $0)" != "." ]; then
+  echo "$(basename "$0"): Script not called from dotfile directory." 1>&2
+  exit 1
+fi
+
+OS=$(uname)
+DOTFILES_DIR=$(cd "$(dirname "$0")"; pwd)
 
 # sym link config files in subdirectories
 symlink() {
@@ -32,3 +38,12 @@ setup_configs() {
 }
 
 setup_configs
+
+# Setup for MacOS
+if [ "${OS}" = "Darwin" ]; then
+  [ -f ${HOME}/.bash_profile -o -L ${HOME}/.bash_profile ] && rm ${HOME}/.bash_profile
+  mv ${HOME}/.bashrc ${HOME}/.bash_profile
+
+  brew tap Homebrew/bundle
+  brew bundle
+fi

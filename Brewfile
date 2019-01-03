@@ -1,0 +1,15 @@
+# Taps
+tap "homebrew/core"
+tap "homebrew/bundle"
+tap "homebrew/services"
+tap "caskroom/cask"
+
+# Binaries
+brew "ack"
+brew "curl"
+brew "gcc"
+brew "git"
+brew "openssl"
+brew "python"
+brew "tmux"
+brew "wget"
