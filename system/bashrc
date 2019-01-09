@@ -3,5 +3,3 @@
 for src_file in ${HOME}/.system/.[^.]*; do
   source ${src_file}
 done
-
-[ -f ${HOME}/.fzf.bash ] && source ~/.fzf.bash
