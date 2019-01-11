@@ -166,7 +166,7 @@ else
 endif
 " }}}
 " FZF {{{
-map ; :FZF<CR>
+map <leader>f :FZF<CR>
 " }}}
 " GITGUTTER {{{
 set updatetime=100
