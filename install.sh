@@ -47,3 +47,5 @@ if [ "${OS}" = "Darwin" ]; then
   brew tap Homebrew/bundle
   brew bundle
 fi
+
+vim +PlugInstall +qall
