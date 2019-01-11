@@ -44,6 +44,10 @@ if [ "${OS}" = "Darwin" ]; then
   [ -f ${HOME}/.bash_profile -o -L ${HOME}/.bash_profile ] && rm ${HOME}/.bash_profile
   mv ${HOME}/.bashrc ${HOME}/.bash_profile
 
+  read -p "Install from brewfile (y/n)? " update_brewfile
+fi
+
+if [ "${update_brewfile}" = "y" ]; then
   brew tap Homebrew/bundle
   brew bundle
 fi
