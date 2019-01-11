@@ -133,6 +133,11 @@ nnoremap <leader>u1 :call UnderlineHeading(1)<CR>
 nnoremap <leader>u2 :call UnderlineHeading(2)<CR>
 nnoremap <leader>u3 :call UnderlineHeading(3)<CR>
 
+function! FixLastSpellCheckError()
+    normal! mm[s1z=`m
+endfunction
+
+nnoremap <leader>sp :call FixLastSpellCheckError()<CR>
 " }}}
 " TMUX {{{
 if exists('$TMUX')
