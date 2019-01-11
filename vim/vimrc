@@ -4,19 +4,24 @@
 
 " Plugins
 call plug#begin('~/.vim/plugged')
-
-Plug 'w0rp/ale'
-Plug 'ervandew/supertab'
-Plug 'bronson/vim-trailing-whitespace'
+" Git
 Plug 'tpope/vim-fugitive'
+" Text Editing
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
+Plug 'ervandew/supertab'
+" Notes
+Plug 'vimwiki/vimwiki'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'suan/vim-instant-markdown'
 Plug 'christoomey/vim-tmux-navigator'
-
+" FZF
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': '.install --all' }
-
+Plug 'junegunn/fzf.vim'
+" Miscellaneous
+Plug 'bronson/vim-trailing-whitespace'
+Plug 'w0rp/ale'
 call plug#end()
 " }}}
 " LEADER {{{
