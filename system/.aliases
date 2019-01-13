@@ -11,7 +11,9 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
-alias open='xdg-open'
+if [ "$(uname)" != "Darwin" ]; then
+  alias open='xdg-open'
+fi
 
 alias ..='cd ..'
 alias ...='cd ../..'
