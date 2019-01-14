@@ -1,8 +1,6 @@
 " Phillip Vo
 
-" LOADING {{{
-
-" Plugins
+" PLUGINS {{{
 call plug#begin('~/.vim/plugged')
 " Git
 Plug 'tpope/vim-fugitive'
@@ -20,15 +18,29 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': '.install --all' }
 Plug 'junegunn/fzf.vim'
 " Miscellaneous
-Plug 'bronson/vim-trailing-whitespace'
 Plug 'w0rp/ale'
 call plug#end()
 " }}}
 " LEADER {{{
 let mapleader="," " leader is comma
 " }}}
-" FILETYPE PLUGINS {{{
+" FILETYPES {{{
 filetype plugin on
+
+augroup filetypes
+    au!
+
+    au BufNewFile,BufRead *.md setlocal ft=markdown spell
+
+    au Filetype gitcommit setlocal spell
+
+    au FileType html,xhtml,xml,css setlocal ts=2 sts=2 sw=2 et ai
+    au FileType javascript setlocal ts=2 sts=2 sw=2 et ai si noci 
+    au FileType python setlocal ts=4 sts=4 sw=4 et ai si cinwords=if,elif,else,for,while,try,except,finally,def,class
+
+    au FileType markdown setlocal syn=off
+    au FileType python setlocal foldmethod=indent foldlevel=99
+augroup END
 " }}}
 " THEME & LAYOUT {{{
 colorscheme badwolf
@@ -43,6 +55,7 @@ set nocompatible
 set wildmenu " visual autocomplete for command menu
 set lazyredraw " redraw only when we need to
 set showmatch " highlight matching [{()}]
+set cursorline
 
 set modeline
 set modelines=1
@@ -98,23 +111,8 @@ set foldnestmax=10
 " space open/closes folds
 nnoremap <space> za
 " }}}
-" FILETYPES {{{
-augroup filetypes
-    au!
-
-    au BufNewFile,BufRead *.md setlocal ft=markdown spell
-
-    au Filetype gitcommit setlocal spell
-
-    au FileType html,xhtml,xml,css setlocal ts=2 sts=2 sw=2 et ai
-    au FileType javascript setlocal ts=2 sts=2 sw=2 et ai si noci 
-    au FileType python setlocal ts=4 sts=4 sw=4 et ai si cinwords=if,elif,else,for,while,try,except,finally,def,class
-
-    au FileType markdown setlocal syn=off
-    au FileType python setlocal foldmethod=indent foldlevel=99
-augroup END
-" }}}
-" FUNCTIONS {{{
+" FUNCTIONS {{{1
+" Markdown Underlining {{{2
 function! UnderlineHeading(level)
     if a:level == 1
         normal! yypVr=
@@ -128,12 +126,14 @@ endfunction
 nnoremap <leader>u1 :call UnderlineHeading(1)<CR>
 nnoremap <leader>u2 :call UnderlineHeading(2)<CR>
 nnoremap <leader>u3 :call UnderlineHeading(3)<CR>
-
+" }}}
+" Fix Spelling Error {{{2
 function! FixLastSpellCheckError()
     normal! mm[s1z=`m
 endfunction
 
 nnoremap <leader>sp :call FixLastSpellCheckError()<CR>
+"}}}
 " }}}
 " TMUX {{{
 if exists('$TMUX')
@@ -169,13 +169,17 @@ let g:ale_sign_column_always = 1
 
 map <leader>at :ALEToggle<cr>
 " }}}
-" NOTES {{{
+" NOTES {{{1
+" Vimwiki {{{2
 let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
+" }}}
+" Vim-Instant-Markdown {{{2
 let g:instant_markdown_autostart = 0
 map <leader>md :InstantMarkdownPreview<CR>
 " }}}
-" MATH {{{
-" Greek
+" }}}
+" MATH {{{1
+" Greek {{{2
 map! <C-v>GA Γ
 map! <C-v>DE Δ
 map! <C-v>TH Θ
@@ -206,22 +210,26 @@ map! <C-v>ta τ
 map! <C-v>ps ψ
 map! <C-v>om ω
 map! <leader>ph ϕ"
-" Math
+" }}}
+" Math {{{2
 map! <C-v>ll →
-map! <C-v>hh ⇌
+map! <C-v>hh ←
 map! <C-v>kk ↑
 map! <C-v>jj ↓
+map! <C-v>hl ↔
 map! <C-v>= ∝
 map! <C-v>~ ≈
+map! <C-v>~= ≅
 map! <C-v>!= ≠
 map! <C-v>!> ⇸
 map! <C-v>~> ↝
 map! <C-v>>= ≥
 map! <C-v><= ≤
 map! <C-v>0  °
-map! <C-v>ce ¢
 map! <C-v>*  •
 map! <C-v>+  ⊕
+map! <C-v>inf ∞
+" }}}
 " }}}
 
 " vim:foldmethod=marker:foldlevel=0
