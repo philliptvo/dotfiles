@@ -94,9 +94,9 @@ noremap <Down> <NOP>
 noremap <Left> <NOP>
 noremap <Right> <NOP>
 
-" set $/^ to no do anything (only in normal mode)
-" nnoremap $ <nop>
-" nnoremap ^ <nop>
+" map H/L to move to first/last non-space character of the line
+" nnoremap H ^
+" nnoremap L g_
 
 " Quickfix
 nnoremap ]q :cnext<cr>zz
