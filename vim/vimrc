@@ -66,6 +66,9 @@ set softtabstop=4
 set shiftwidth=4
 set expandtab
 set autoindent
+
+set list
+set listchars=tab:▸\ ,eol:¬
 " }}}
 " NAVIGATING {{{
 " move vertically by visual line (only in normal mode)
