@@ -164,10 +164,6 @@ endif
 " FZF {{{
 map <leader>f :FZF<CR>
 " }}}
-" GITGUTTER {{{
-set updatetime=100
-nnoremap <leader>g :GitGutterToggle<cr>
-" }}}
 " ALE {{{
 let g:ale_sign_column_always = 1
 
