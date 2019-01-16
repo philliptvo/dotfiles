@@ -202,6 +202,7 @@ map! <C-v>io ι
 map! <C-v>ka κ
 map! <C-v>la λ
 map! <C-v>mu μ
+map! <C-v>nu ν
 map! <C-v>xi ξ
 map! <C-v>pi π
 map! <C-v>rh ρ
@@ -228,6 +229,7 @@ map! <C-v><= ≤
 map! <C-v>0  °
 map! <C-v>*  •
 map! <C-v>+  ⊕
+map! <C-v>+- ±
 map! <C-v>inf ∞
 " }}}
 " }}}
