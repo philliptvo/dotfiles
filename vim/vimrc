@@ -7,13 +7,15 @@ Plug 'tpope/vim-fugitive'
 " Text Editing
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
-Plug 'ervandew/supertab'
+Plug 'jiangmiao/auto-pairs'
 " Notes
 Plug 'vimwiki/vimwiki'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'vim-pandoc/vim-pandoc-after'
 Plug 'suan/vim-instant-markdown'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'dhruvasagar/vim-table-mode'
 " FZF
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': '.install --all' }
 Plug 'junegunn/fzf.vim'
@@ -30,7 +32,7 @@ filetype plugin on
 augroup filetypes
     au!
 
-    au BufNewFile,BufRead *.md setlocal ft=markdown spell
+    au BufNewFile,BufRead *.md setlocal ft=markdown spell ts=2 sts=2 sw=2 et ai si
 
     au Filetype gitcommit setlocal spell
 
@@ -170,8 +172,13 @@ let g:ale_sign_column_always = 1
 map <leader>at :ALEToggle<cr>
 " }}}
 " NOTES {{{1
+" Vim-Pandoc {{{2
+let g:pandoc#after#modules#enabled = ["tablemode"]
+" }}}
 " Vimwiki {{{2
 let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
+let g:vimwiki_table_mappings=0
+let g:vimwiki_table_auto_fmt=0
 " }}}
 " Vim-Instant-Markdown {{{2
 let g:instant_markdown_autostart = 0
