@@ -95,8 +95,8 @@ noremap <Left> <NOP>
 noremap <Right> <NOP>
 
 " map H/L to move to first/last non-space character of the line
-" nnoremap H ^
-" nnoremap L g_
+nnoremap H ^
+nnoremap L g_
 
 " Quickfix
 nnoremap ]q :cnext<cr>zz
