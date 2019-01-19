@@ -13,7 +13,6 @@ Plug 'vimwiki/vimwiki'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'vim-pandoc/vim-pandoc-after'
-Plug 'suan/vim-instant-markdown'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'dhruvasagar/vim-table-mode'
 " FZF
@@ -25,6 +24,24 @@ call plug#end()
 " }}}
 " LEADER {{{
 let mapleader="," " leader is comma
+
+" Markdown Headings
+nnoremap <leader>u1 :call UnderlineHeading(1)<CR>
+nnoremap <leader>u2 :call UnderlineHeading(2)<CR>
+nnoremap <leader>u3 :call UnderlineHeading(3)<CR>
+
+" Spelling Error Quickfix
+nnoremap <leader>sp :call FixLastSpellCheckError()<CR>
+
+" FZF
+map <leader>f :FZF<CR>
+
+" Ale
+map <leader>at :ALEToggle<cr>
+
+" Notes
+nnoremap <leader>pl :!pandoc --pdf-engine=lualatex -H ~/resources/notes/template.tex -o %:r.pdf % <CR>
+nnoremap <leader>v :!open %:r.pdf 2>&1 > /dev/null &<CR><CR>
 " }}}
 " FILETYPES {{{
 filetype plugin on
@@ -124,17 +141,11 @@ function! UnderlineHeading(level)
         normal! I### 
     endif
 endfunction
-
-nnoremap <leader>u1 :call UnderlineHeading(1)<CR>
-nnoremap <leader>u2 :call UnderlineHeading(2)<CR>
-nnoremap <leader>u3 :call UnderlineHeading(3)<CR>
 " }}}
 " Fix Spelling Error {{{2
 function! FixLastSpellCheckError()
     normal! mm[s1z=`m
 endfunction
-
-nnoremap <leader>sp :call FixLastSpellCheckError()<CR>
 "}}}
 " }}}
 " TMUX {{{
@@ -163,26 +174,23 @@ else
   map <C-l> <C-w>l
 endif
 " }}}
-" FZF {{{
-map <leader>f :FZF<CR>
-" }}}
 " ALE {{{
 let g:ale_sign_column_always = 1
-
-map <leader>at :ALEToggle<cr>
 " }}}
 " NOTES {{{1
 " Vim-Pandoc {{{2
+nnoremap <silent> ~~ :exe "norm v$hS~"<CR>
+nnoremap <silent> ^^ :exe "norm v$hS^"<CR>
+vmap ~ S~
+vmap ^ S^
+
+let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
 let g:pandoc#after#modules#enabled = ["tablemode"]
 " }}}
 " Vimwiki {{{2
 let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
 let g:vimwiki_table_mappings=0
 let g:vimwiki_table_auto_fmt=0
-" }}}
-" Vim-Instant-Markdown {{{2
-let g:instant_markdown_autostart = 0
-map <leader>md :InstantMarkdownPreview<CR>
 " }}}
 " }}}
 " MATH {{{1
