@@ -225,7 +225,7 @@ map! <C-v>si σ
 map! <C-v>ta τ
 map! <C-v>ps ψ
 map! <C-v>om ω
-map! <leader>ph ϕ"
+map! <C-v>ph ϕ
 " }}}
 " Math {{{2
 map! <C-v>ll →
