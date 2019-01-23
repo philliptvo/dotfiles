@@ -53,7 +53,7 @@ filetype plugin on
 augroup filetypes
     au!
 
-    au BufNewFile,BufRead *.md setlocal ft=markdown spell ts=2 sts=2 sw=2 et ai si
+    au BufNewFile,BufRead *.md setlocal ft=markdown.tex spell ts=2 sts=2 sw=2 et ai si
 
     au Filetype gitcommit setlocal spell
 
@@ -62,7 +62,11 @@ augroup filetypes
     au FileType python setlocal ts=4 sts=4 sw=4 et ai si cinwords=if,elif,else,for,while,try,except,finally,def,class
 
     au FileType markdown setlocal syn=off
+    au FileType markdown let b:AutoPairs = AutoPairsDefine({'$' : '$'})
+
     au FileType python setlocal foldmethod=indent foldlevel=99
+
+    au FileType sh setlocal ts=2 sts=2 sw=2 et ai
 augroup END
 " }}}
 " THEME & LAYOUT {{{
