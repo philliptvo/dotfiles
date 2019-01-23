@@ -48,8 +48,10 @@ map <leader>f :FZF<CR>
 " Ale
 map <leader>at :ALEToggle<cr>
 
-" Notes
-nnoremap <leader>pl :!pandoc --pdf-engine=lualatex -H ~/resources/notes/template.tex -o %:r.pdf % <CR>
+" Notes (tmp)
+nnoremap <leader>pl :!pandoc --pdf-engine=lualatex -H ~/resources/notes/template.tex -o %:r.pdf %<CR>
+nnoremap <leader>pp :!pandoc --toc --pdf-engine=lualatex --filter pandoc-citeproc --bibliography=report.bib -H ~/resources/papers/template.tex -o %:r.pdf %<CR>
+nnoremap <leader>pm :!pandoc -o %:r.pdf %<CR>
 nnoremap <leader>v :!open %:r.pdf 2>&1 > /dev/null &<CR><CR>
 
 " UltiSnips
