@@ -1,0 +1,199 @@
+priority -50
+
+##############
+# MATH STUFF #
+##############
+
+snippet eq "Equation" b
+\begin{equation}
+	${0:${VISUAL}}
+\end{equation}
+endsnippet
+
+snippet eql "Labeled equation environment" b
+\begin{equation}
+	\label{eq:${1}}
+	${0:${VISUAL}}
+\end{equation}
+endsnippet
+
+snippet eqnn "Equation without a number" b
+\begin{equation*}
+	${0:${VISUAL}}
+\end{equation*}
+endsnippet
+
+snippet al "Align" b
+\begin{align}
+	${0:${VISUAL}}
+\end{align}
+endsnippet
+
+snippet alnn "Align without a number" b
+\begin{align*}
+	${0:${VISUAL}}
+\end{align*}
+endsnippet
+
+snippet eqa "Equation array" b
+\begin{eqnarray}
+	${1:${VISUAL}} & ${2:${VISUAL}} & ${0:${VISUAL}}
+\end{eqnarray}
+endsnippet
+
+snippet eqann "Equation array without a number" b
+\begin{eqnarray*}
+	${1:${VISUAL}} & ${2:${VISUAL}} & ${0:${VISUAL}}
+\end{eqnarray*}
+endsnippet
+
+snippet case "amsmath cases" w
+\begin{cases}
+	${1:${VISUAL}}$0
+\end{cases}
+endsnippet
+
+snippet ubrace "underbrace" w
+\underbrace{${1:${VISUAL}}}_{${2}}$0
+endsnippet
+
+##################
+# EQUATION STUFF #
+##################
+
+snippet ddt "time derivative" w
+\frac{d ${1:${VISUAL}}}{dt}$0
+endsnippet
+
+snippet part "parial derivative" w
+\fracc{\partial ${1}}{\partial ${2}}$0
+endsnippet
+
+snippet dint "integral" w
+\int_{${1:-\infty}}^{${2:\infty}}${4} ${3:dx}$0
+endsnippet
+
+snippet sum "summation" w
+\sum_{${1:n=1}}^{${2:\infty}} $0
+endsnippet
+
+snippet '(\w+)sr' "x squared" r
+`!p
+stripped = match.string[:-2]
+snip.rv = stripped
+`^2
+endsnippet
+
+snippet '(\w+)cb' "x cubed" r
+`!p
+stripped = match.string[:-2]
+snip.rv = stripped
+`^3
+endsnippet
+
+snippet exp "exponential" w
+e^{${1:${VISUAL}}}$0
+endsnippet
+
+snippet norm "norm" w
+\|${1:${VISUAL}}\| $0
+endsnippet
+
+snippet xx "times" wA
+\times 
+endsnippet
+
+snippet ** "dot product" wA
+\cdot 
+endsnippet
+
+#################
+# PHYSICS STUFF #
+#################
+
+snippet dv "Derivative" w
+\dv[${1:${VISUAL}}]{${2}}{${3}}
+endsnippet
+
+snippet pdv "Partial Derivative" w
+\pdv[${1:${VISUAL}}]{${2}}{${3}}
+endsnippet
+
+snippet SI "SI-Unit" w
+\SI{${1:${VISUAL}}}{${2}}
+endsnippet
+
+snippet lr "left right" w
+\left${1} ${0:${VISUAL}} \right${1}
+endsnippet
+
+snippet lr( "left( right)" w
+\left( ${0:${VISUAL}} \right)
+endsnippet
+
+snippet lr| "left| right|" w
+\left| ${0:${VISUAL}} \right|
+endsnippet
+
+snippet lr{ "left\{ right\}" w
+\left\{ ${0:${VISUAL}} \right\}
+endsnippet
+
+snippet lr[ "left[ right]" w
+\left[ ${0:${VISUAL}} \right]
+endsnippet
+
+snippet lra "langle rangle" w
+\langle ${0:${VISUAL}} \rangle
+endsnippet
+
+snippet kt "ket" w
+\ket{${1:\Psi}}$0
+endsnippet
+
+snippet br "bra" w
+\bra{${1:\Psi}}$0
+endsnippet
+
+snippet ktbr "ketbra conjugates" w
+\ketbra{${1:\Psi}}$0
+endsnippet
+
+snippet ktbrr "outer product" w
+\ketbra{${1:\Psi}}{${2:\Psi}}$0
+endsnippet
+
+snippet brkt "braket conjugates" w
+\braket{${1:\Psi}}$0
+endsnippet
+
+snippet brktt "inner product" w
+\braket{${1:\Psi}}{${2:\Psi}}
+endsnippet
+
+################
+# CUSTOM STUFF #
+################
+priority 1000
+snippet '((\d+)?(\\)?([A-Za-z]*)((\^|_)((\{\d+\})|(\d)))?)/' "symbol frac" wrA
+\\frac{`!p snip.rv = match.group(1)`}{$1}$0
+endsnippet
+
+# Examples:
+# (...)/ ->  \frac{...}{|}
+# (Matching from the beginning of the line because some annoying bugs...)
+snippet '^.*\)/' "() frac" wrA
+`!p
+stripped = match.string[:-1]
+depth = 0
+i = len(stripped) - 1
+while True:
+	if stripped[i] == ')': depth += 1
+	if stripped[i] == '(': depth -= 1
+	if depth == 0: break;
+	i-=1
+snip.rv = stripped[0:i] + "\\frac{" + stripped[i+1:-1] + "}"
+`{$1}$0
+endsnippet
+
+# vim:ft=snippets:
