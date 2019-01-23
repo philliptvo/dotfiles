@@ -26,6 +26,14 @@ call plug#end()
 " LEADER {{{
 let mapleader="," " leader is comma
 
+" Align text
+nnoremap <leader>Al :left<CR>
+nnoremap <leader>Ac :center<CR>
+nnoremap <leader>Ar :right<CR>
+vnoremap <leader>Al :left<CR>
+vnoremap <leader>Ac :center<CR>
+vnoremap <leader>Ar :right<CR>
+
 " Markdown Headings
 nnoremap <leader>u1 :call UnderlineHeading(1)<CR>
 nnoremap <leader>u2 :call UnderlineHeading(2)<CR>
@@ -87,6 +95,9 @@ set cursorline
 set modeline
 set modelines=1
 
+set backspace=2 " backspace over everything
+set scrolloff=5
+
 " jk is escape (only for insert mode)
 inoremap jk <esc>
 inoremap JK <esc>
@@ -94,6 +105,12 @@ inoremap JK <esc>
 " Spellcheck
 set spelllang=en
 nnoremap<leader>s :set spell!<cr>
+" }}}
+" QUICKEDITING {{{
+nnoremap <leader>ev <C-w>s<C-w>j<C-w>L:e $MYVIMRC<CR>
+nnoremap <leader>es <C-w>s<C-w>j<C-w>L:e ~/.vim/UltiSnips/<CR>
+nnoremap <leader>ed <C-w>s<C-w>j<C-w>L:e ~/Dropbox/<CR>
+nnoremap <leader>ew <C-w>s<C-w>j<C-w>L:e ~/Documents/UWaterloo\ Undergrad/Term_3B_W19/<CR>
 " }}}
 " SEARCHING {{{
 set incsearch
@@ -109,6 +126,8 @@ set autoindent
 
 set list
 set listchars=tab:▸\ ,eol:¬
+
+set showbreak=↪
 " }}}
 " NAVIGATING {{{
 " move vertically by visual line (only in normal mode)
@@ -128,6 +147,10 @@ nnoremap L g_
 " Quickfix
 nnoremap ]q :cnext<cr>zz
 nnoremap [q :cprev<cr>zz
+
+" Open new line above/below current line
+nnoremap o o<esc>
+nnoremap O O<esc>
 " }}}
 " FOLDING {{{
 set foldenable
