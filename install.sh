@@ -37,6 +37,16 @@ setup_configs() {
   done
 }
 
+update_passive_files() {
+  if [ -d ${HOME}/.vim/spell/ ]; then
+    cp ${HOME}/.vim/spell/* vim/spell/
+  fi
+  if [ -d ${HOME}/.vim/UltiSnips/ ];then
+    cp ${HOME}/.vim/UltiSnips/* vim/UltiSnips/
+  fi
+}
+
+update_passive_files
 setup_configs
 
 # Setup for MacOS
