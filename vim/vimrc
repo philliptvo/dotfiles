@@ -8,13 +8,14 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'jiangmiao/auto-pairs'
+Plug 'SirVer/ultisnips'
 " Notes
-Plug 'vimwiki/vimwiki'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'vim-pandoc/vim-pandoc-after'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'dhruvasagar/vim-table-mode'
+Plug 'junegunn/goyo.vim'
 " FZF
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': '.install --all' }
 Plug 'junegunn/fzf.vim'
@@ -42,6 +43,9 @@ map <leader>at :ALEToggle<cr>
 " Notes
 nnoremap <leader>pl :!pandoc --pdf-engine=lualatex -H ~/resources/notes/template.tex -o %:r.pdf % <CR>
 nnoremap <leader>v :!open %:r.pdf 2>&1 > /dev/null &<CR><CR>
+
+" UltiSnips
+nnoremap <leader>ue :UltiSnipsEdit<CR>
 " }}}
 " FILETYPES {{{
 filetype plugin on
@@ -177,6 +181,13 @@ endif
 " ALE {{{
 let g:ale_sign_column_always = 1
 " }}}
+" AUTOPAIRS {{{
+let g:AutoPairsShortcutToggle = '<leader>ap'
+" }}}
+" ULTISNIPS {{{
+let g:UltiSnipsDirectories="~/.vim/UltiSnips"
+let g:UltiSnipsEditSplit="vertical"
+" }}}
 " NOTES {{{1
 " Vim-Pandoc {{{2
 nnoremap <silent> ~~ :exe "norm v$hS~"<CR>
@@ -185,12 +196,7 @@ vmap ~ S~
 vmap ^ S^
 
 let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
-let g:pandoc#after#modules#enabled = ["tablemode"]
-" }}}
-" Vimwiki {{{2
-let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
-let g:vimwiki_table_mappings=0
-let g:vimwiki_table_auto_fmt=0
+let g:pandoc#after#modules#enabled = ["ultisnips", "tablemode"]
 " }}}
 " }}}
 " MATH {{{1
