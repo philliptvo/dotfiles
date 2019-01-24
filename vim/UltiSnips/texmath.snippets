@@ -53,6 +53,15 @@ snippet case "amsmath cases" w
 \end{cases}
 endsnippet
 
+snippet rcase "right cases with amsmath" w
+\begin{equation*}
+\begin{rcases}
+	${1:${VISUAL}}
+\end{rcases}
+${2:\text{${3:text}}}$0
+\end{equation*}
+endsnippet
+
 snippet ubrace "underbrace" w
 \underbrace{${1:${VISUAL}}}_{${2}}$0
 endsnippet
@@ -60,6 +69,17 @@ endsnippet
 ##################
 # EQUATION STUFF #
 ##################
+
+snippet $ "math section" wA
+\$${1:${VISUAL}}\$$0
+endsnippet
+
+snippet \$ "math block" bA
+\$\$
+${1:${VISUAL}}
+\$\$
+$0
+endsnippet
 
 snippet frac "fraction" w
 \frac{${1:${VISUAL}}}{${2}}$0
@@ -105,11 +125,11 @@ snippet sum "summation" w
 \sum_{${1:n=1}}^{${2:\infty}} $0
 endsnippet
 
-snippet __ "subscript" i
+snippet __ "subscript" iA
 _{${1:${VISUAL}}}$0
 endsnippet
 
-snippet ^^ "superscript" i
+snippet ^^ "superscript" iA
 ^{${1:${VISUAL}}}$0
 endsnippet
 
