@@ -56,6 +56,9 @@ nnoremap <leader>v :!open %:r.pdf 2>&1 > /dev/null &<CR><CR>
 
 " UltiSnips
 nnoremap <leader>ue :UltiSnipsEdit<CR>
+
+" Goyo
+nnoremap <leader>G :Goyo<CR>
 " }}}
 " FILETYPES {{{
 filetype plugin on
