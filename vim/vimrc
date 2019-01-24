@@ -35,9 +35,11 @@ vnoremap <leader>Ac :center<CR>
 vnoremap <leader>Ar :right<CR>
 
 " Markdown Headings
-nnoremap <leader>u1 :call UnderlineHeading(1)<CR>
-nnoremap <leader>u2 :call UnderlineHeading(2)<CR>
-nnoremap <leader>u3 :call UnderlineHeading(3)<CR>
+nnoremap <leader>1 m`yypVr=``
+nnoremap <leader>2 m`yypVr-``
+nnoremap <leader>3 ^i### <esc>
+nnoremap <leader>4 ^i#### <esc>
+nnoremap <leader>5 ^i##### <esc>
 
 " Spelling Error Quickfix
 nnoremap <leader>sp :call FixLastSpellCheckError()<CR>
@@ -75,7 +77,6 @@ augroup filetypes
     au FileType python setlocal ts=4 sts=4 sw=4 et ai si cinwords=if,elif,else,for,while,try,except,finally,def,class
 
     au FileType markdown setlocal syn=off
-    au FileType markdown let b:AutoPairs = AutoPairsDefine({'$' : '$'})
 
     au FileType python setlocal foldmethod=indent foldlevel=99
 
@@ -167,17 +168,6 @@ set foldnestmax=10
 nnoremap <space> za
 " }}}
 " FUNCTIONS {{{1
-" Markdown Underlining {{{2
-function! UnderlineHeading(level)
-    if a:level == 1
-        normal! yypVr=
-    elseif a:level == 2
-        normal! yypVr-
-    else
-        normal! I### 
-    endif
-endfunction
-" }}}
 " Fix Spelling Error {{{2
 function! FixLastSpellCheckError()
     normal! mm[s1z=`m
