@@ -104,6 +104,8 @@ set modelines=1
 set backspace=2 " backspace over everything
 set scrolloff=5
 
+set noswapfile
+
 " jk is escape (only for insert mode)
 inoremap jk <esc>
 inoremap JK <esc>
@@ -166,6 +168,7 @@ set foldnestmax=10
 
 " space open/closes folds
 nnoremap <space> za
+nnoremap <leader>z zMzvzz
 " }}}
 " FUNCTIONS {{{1
 " Fix Spelling Error {{{2
