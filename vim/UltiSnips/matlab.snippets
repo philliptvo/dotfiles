@@ -1,76 +1,78 @@
 snippet if "if" b
-	if ${1}
-		${0}
-	end
+if ${1}
+	${0}
+end
 endsnippet
 
 snippet ife "if ... else" b
-	if ${1}
-		${2}
-	else
-		${0}
-	end
+if ${1}
+	${2}
+else
+	${0}
+end
 endsnippet
 
 snippet el "else" b
-	else
-		${0}
-endsnippet
-
-snippet eif "elsif" b
-	elseif ${1}
-		${0}
-endsnippet
-
-snippet wh "while" b
-	while ${1}
-		${0}
-	end
-endsnippet
-
-snippet for "for" b
-	for ${1:i} = ${2:1:n}
-		${0}
-	end
-endsnippet
-
-snippet parfor "parfor" b
-	parfor ${1:i} = ${2:1:n}
-		${0}
-	end
-endsnippet
-
-snippet fun "function" b
-	function [${3:out}] = ${1:`vim_snippets#Filename("$1", "fun_name")`}(${2}) 
+else
 	${0}
 endsnippet
 
+snippet eif "elsif" b
+elseif ${1}
+	${0}
+endsnippet
+
+snippet wh "while" b
+while ${1}
+	${0}
+end
+endsnippet
+
+snippet for "for" b
+for ${1:i} = ${2:1:n}
+	${0}
+end
+endsnippet
+
+snippet parfor "parfor" b
+parfor ${1:i} = ${2:1:n}
+	${0}
+end
+endsnippet
+
+snippet fun "function" b
+function [${3:out}] = ${1:`vim_snippets#Filename("$1", "fun_name")`}(${2}) 
+${0}
+endsnippet
+
 snippet try "try ... catch" b
-	try
-		${1}
-	catch ${2:err}
-		${0}
-	end
+try
+	${1}
+catch ${2:err}
+	${0}
+end
 endsnippet
 
 snippet switch "switch" b
-	switch ${1:n}
-		case ${2:0}
-			${0}
-	end
+switch ${1:n}
+	case ${2:0}
+		${3}${4:
+	otherwise
+		${5}}
+end
 endsnippet
 
 snippet @ "anonymous function" w
-	@(${1:x}) ${0:x*x}
+@(${1:x}) ${0:x*x}
 endsnippet
 
 snippet cl "class " b
-	classdef ${1:`vim_snippets#Filename("$1", "class_name")`}
-	   properties
-		  ${2}
-	   end
-	   methods
-		  ${0}
-	   end
-	end
+classdef ${1:`vim_snippets#Filename("$1", "class_name")`}
+   properties
+	  ${2}
+   end
+   methods
+	  ${0}
+   end
+end
 endsnippet
