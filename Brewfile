@@ -14,6 +14,10 @@ brew "openssl"
 brew "pandoc"
 brew "pandoc-citeproc"
 brew "python"
+brew "qt"
 brew "tmux"
-brew "vim", args: ['--with-python3', '--with-override-system-vi']
 brew "wget"
+
+# Binaries with dependencies
+brew "octave", args: ['--with-qt']
+brew "vim", args: ['--with-python3', '--with-override-system-vi']
