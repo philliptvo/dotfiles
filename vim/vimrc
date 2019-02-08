@@ -176,6 +176,27 @@ function! FixLastSpellCheckError()
     normal! mm[s1z=`m
 endfunction
 "}}}
+" Toggle netrw {{{2
+let g:NetrwIsOpen=0
+
+function! ToggleNetrw()
+    if g:NetrwIsOpen
+        let i = bufnr("$")
+        while (i >= 1)
+            if (getbufvar(i, "&filetype") == "netrw")
+                silent exe "bwipeout " . i 
+            endif
+            let i-=1
+        endwhile
+        let g:NetrwIsOpen=0
+    else
+        let g:NetrwIsOpen=1
+        silent Vexplore
+    endif
+endfunction
+
+noremap <silent> <C-E> :call ToggleNetrw()<CR>
+" }}}
 " }}}
 " TMUX {{{
 if exists('$TMUX')
@@ -203,7 +224,16 @@ else
   map <C-l> <C-w>l
 endif
 " }}}
-" ALE {{{
+" NETRW {{{
+let g:netrw_liststyle = 3
+let g:netrw_browse_split = 4
+let g:netrw_altv = 1
+let g:netrw_winsize = 25
+let g:netrw_banner = 0
+let g:netrw_list_hide = &wildignore
+" }}}
+" PLUGINS {{{1
+" ALE {{{2
 let g:ale_sign_column_always = 1
 " }}}
 " AUTOPAIRS {{{
