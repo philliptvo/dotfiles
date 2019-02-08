@@ -1,32 +1,4 @@
-priority -49
-
-###########################
-# Sections and Paragraphs #
-###########################
-snippet sec "Section" b
-# ${1:Section Name} #
-$0
-endsnippet
-
-snippet ssec "Sub Section" b
-## ${1:Section Name} ##
-$0
-endsnippet
-
-snippet sssec "SubSub Section" b
-### ${1:Section Name} ###
-$0
-endsnippet
-
-snippet par "Paragraph" b
-#### ${1:Paragraph Name} ####
-$0
-endsnippet
-
-snippet spar "Paragraph" b
-##### ${1:Paragraph Name} #####
-$0
-endsnippet
+priority -50
 
 ###################
 # Text formatting #
@@ -53,7 +25,7 @@ snippet link "Link to something"
 endsnippet
 
 snippet img "Image"
-![${1:${VISUAL:pic alt}}](${2:images/${3:image name}}){width=${4:100}% height=${5:100}%}$0
+![${1:pic alt}](${2:path}${3/.+/ "/}${3:opt title}${3/.+/"/})$0
 endsnippet
 
 snippet ilc "Inline Code" i
