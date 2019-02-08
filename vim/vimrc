@@ -13,7 +13,6 @@ Plug 'SirVer/ultisnips'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'vim-pandoc/vim-pandoc-after'
-Plug 'christoomey/vim-tmux-navigator'
 Plug 'dhruvasagar/vim-table-mode'
 Plug 'junegunn/goyo.vim'
 " FZF
@@ -21,18 +20,11 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': '.install --all' }
 Plug 'junegunn/fzf.vim'
 " Miscellaneous
 Plug 'w0rp/ale'
+Plug 'christoomey/vim-tmux-navigator'
 call plug#end()
 " }}}
 " LEADER {{{
 let mapleader="," " leader is comma
-
-" Align text
-nnoremap <leader>Al :left<CR>
-nnoremap <leader>Ac :center<CR>
-nnoremap <leader>Ar :right<CR>
-vnoremap <leader>Al :left<CR>
-vnoremap <leader>Ac :center<CR>
-vnoremap <leader>Ar :right<CR>
 
 " Markdown Headings
 nnoremap <leader>1 m`yypVr=``
@@ -41,26 +33,10 @@ nnoremap <leader>3 ^i### <esc>
 nnoremap <leader>4 ^i#### <esc>
 nnoremap <leader>5 ^i##### <esc>
 
-" Spelling Error Quickfix
-nnoremap <leader>sp :call FixLastSpellCheckError()<CR>
-
-" FZF
-map <leader>f :FZF<CR>
-
-" Ale
-map <leader>at :ALEToggle<cr>
-
 " Notes (tmp)
-nnoremap <leader>pl :!pandoc --pdf-engine=lualatex -H ~/resources/notes/template.tex -o %:r.pdf %<CR>
-nnoremap <leader>pp :!pandoc --toc --pdf-engine=lualatex --filter pandoc-citeproc --bibliography=report.bib -H ~/resources/papers/template.tex -o %:r.pdf %<CR>
-nnoremap <leader>pm :!pandoc -o %:r.pdf %<CR>
+nnoremap <leader>pl :!pandoc --pdf-engine=lualatex -H ~/resources/notes.tex -o %:r.pdf %<CR>
+nnoremap <leader>pp :!pandoc --pdf-engine=lualatex --filter pandoc-citeproc --bibliography=%:r.bib -H ~/resources/notes.tex -o %:r.pdf %<CR>
 nnoremap <leader>v :!open %:r.pdf 2>&1 > /dev/null &<CR><CR>
-
-" UltiSnips
-nnoremap <leader>ue :UltiSnipsEdit<CR>
-
-" Goyo
-nnoremap <leader>G :Goyo<CR>
 " }}}
 " FILETYPES {{{
 filetype plugin on
@@ -76,7 +52,7 @@ augroup filetypes
     au FileType javascript setlocal ts=2 sts=2 sw=2 et ai si noci 
     au FileType python setlocal ts=4 sts=4 sw=4 et ai si cinwords=if,elif,else,for,while,try,except,finally,def,class
 
-    au FileType markdown setlocal syn=off
+    au FileType pandoc setlocal syn=off
 
     au FileType python setlocal foldmethod=indent foldlevel=99
 
@@ -118,7 +94,8 @@ nnoremap<leader>s :set spell!<cr>
 nnoremap <leader>ev <C-w>s<C-w>j<C-w>L:e $MYVIMRC<CR>
 nnoremap <leader>es <C-w>s<C-w>j<C-w>L:e ~/.vim/UltiSnips/<CR>
 nnoremap <leader>ed <C-w>s<C-w>j<C-w>L:e ~/Dropbox/<CR>
-nnoremap <leader>ew <C-w>s<C-w>j<C-w>L:e ~/Documents/UWaterloo\ Undergrad/Term_3B_W19/<CR>
+nnoremap <leader>ew <C-w>s<C-w>j<C-w>L:e ~/Dropbox/3B/<CR>
+nnoremap <leader>en <C-w>s<C-w>j<C-w>L:e ~/Dropbox/Notes<CR>
 " }}}
 " SEARCHING {{{
 set incsearch
@@ -175,6 +152,8 @@ nnoremap <leader>z zMzvzz
 function! FixLastSpellCheckError()
     normal! mm[s1z=`m
 endfunction
+
+nnoremap <leader>sp :call FixLastSpellCheckError()<CR>
 "}}}
 " Toggle netrw {{{2
 let g:NetrwIsOpen=0
@@ -235,78 +214,27 @@ let g:netrw_list_hide = &wildignore
 " PLUGINS {{{1
 " ALE {{{2
 let g:ale_sign_column_always = 1
+map <leader>at :ALEToggle<cr>
 " }}}
-" AUTOPAIRS {{{
+" AUTOPAIRS {{{2
 let g:AutoPairsShortcutToggle = '<leader>ap'
 " }}}
-" ULTISNIPS {{{
+" ULTISNIPS {{{2
 let g:UltiSnipsDirectories="~/.vim/UltiSnips"
 let g:UltiSnipsEditSplit="vertical"
-" }}}
-" NOTES {{{1
-" Vim-Pandoc {{{2
-nnoremap <silent> ~~ :exe "norm v$hS~"<CR>
-nnoremap <silent> ^^ :exe "norm v$hS^"<CR>
-vmap ~ S~
-vmap ^ S^
 
+" }}}
+" VIM-PANDOC {{{2
 let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
+let g:pandoc#command#autoexec_on_writes = 1
+let g:pandoc#command#autoexec_command = "Pandoc pdf --pdf-engine=lualatex -H ~/resources/notes.tex"
 let g:pandoc#after#modules#enabled = ["ultisnips", "tablemode"]
 " }}}
+" FZF {{{2
+map <leader>f :FZF<CR>
 " }}}
-" MATH {{{1
-" Greek {{{2
-map! <C-v>GA Γ
-map! <C-v>DE Δ
-map! <C-v>TH Θ
-map! <C-v>LA Λ
-map! <C-v>XI Ξ
-map! <C-v>PI Π
-map! <C-v>SI Σ
-map! <C-v>PH Φ
-map! <C-v>PS Ψ
-map! <C-v>OM Ω
-map! <C-v>al α
-map! <C-v>be β
-map! <C-v>ga γ
-map! <C-v>de δ
-map! <C-v>ep ε
-map! <C-v>ze ζ
-map! <C-v>et η
-map! <C-v>th θ
-map! <C-v>io ι
-map! <C-v>ka κ
-map! <C-v>la λ
-map! <C-v>mu μ
-map! <C-v>nu ν
-map! <C-v>xi ξ
-map! <C-v>pi π
-map! <C-v>rh ρ
-map! <C-v>si σ
-map! <C-v>ta τ
-map! <C-v>ps ψ
-map! <C-v>om ω
-map! <C-v>ph ϕ
-" }}}
-" Math {{{2
-map! <C-v>ll →
-map! <C-v>hh ←
-map! <C-v>kk ↑
-map! <C-v>jj ↓
-map! <C-v>hl ↔
-map! <C-v>= ∝
-map! <C-v>~ ≈
-map! <C-v>~= ≅
-map! <C-v>!= ≠
-map! <C-v>!> ⇸
-map! <C-v>~> ↝
-map! <C-v>>= ≥
-map! <C-v><= ≤
-map! <C-v>0  °
-map! <C-v>*  •
-map! <C-v>+  ⊕
-map! <C-v>+- ±
-map! <C-v>inf ∞
+" Goyo {{{2
+nnoremap <leader>G :Goyo<CR>
 " }}}
 " }}}
 
