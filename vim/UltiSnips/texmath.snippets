@@ -216,71 +216,11 @@ snippet LL "math caligraphy L" wA
 \mathcal{L}(${1:y})$0
 endsnippet
 
-#################
-# PHYSICS STUFF #
-#################
-
-snippet dv "Derivative" w
-\dv${1}{${2}}{${3}}
-endsnippet
-
-snippet pdv "Partial Derivative" w
-\pdv${1}{${2}}{${3}}
-endsnippet
-
-snippet SI "SI-Unit" w
-\SI{${1:${VISUAL}}}{${2}}
-endsnippet
-
-snippet '(\w+)vec' "vector with arrow" r
-\va{`!p snip.rv = match.group(1)`}$0
-endsnippet
-
-snippet '(\w+)\^' "unit vector" r
-\vu{`!p snip.rv = match.group(1)`}$0
-endsnippet
-
-snippet kt "ket" w
-\ket{${1:\Psi}}$0
-endsnippet
-
-snippet br "bra" w
-\bra{${1:\Psi}}$0
-endsnippet
-
-snippet ktbr "ketbra conjugates" w
-\ketbra{${1:\Psi}}$0
-endsnippet
-
-snippet ktbrr "outer product" w
-\ketbra{${1:\Psi}}{${2:\Psi}}$0
-endsnippet
-
-snippet brkt "braket conjugates" w
-\braket{${1:\Psi}}$0
-endsnippet
-
-snippet brktt "inner product" w
-\braket{${1:\Psi}}{${2:\Psi}}
-endsnippet
-
-snippet comm "commutator" w
-\comm{${1}}{${2}}$0
-endsnippet
-
-snippet exval "expectation value" w
-\expval{${1:x}}$0
-endsnippet
-
-snippet exvall "expectation value wrt..." w
-\expval{${1:x}}{${2:\Psi}}$0
-endsnippet
-
 ################
 # CUSTOM STUFF #
 ################
 
-snippet '(\w)(\d?i)' "index" wr
+snippet '(\w)(\d|i)' "index" wr
 `!p snip.rv = match.group(1)`_`!p snip.rv = match.group(2)`$0
 endsnippet
 
