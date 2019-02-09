@@ -21,6 +21,7 @@ Plug 'junegunn/fzf.vim'
 " Miscellaneous
 Plug 'w0rp/ale'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'scrooloose/nerdtree'
 call plug#end()
 " }}}
 " LEADER {{{
@@ -55,6 +56,8 @@ augroup filetypes
     au FileType pandoc setlocal syn=off
 
     au FileType python setlocal foldmethod=indent foldlevel=99
+
+    au BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
     au FileType sh setlocal ts=2 sts=2 sw=2 et ai
 augroup END
@@ -186,25 +189,28 @@ endif
 let g:ale_sign_column_always = 1
 map <leader>at :ALEToggle<cr>
 " }}}
-" AUTOPAIRS {{{2
+" PLUGINS {{{1
+" auto-pairs {{{2
 let g:AutoPairsShortcutToggle = '<leader>ap'
 " }}}
-" ULTISNIPS {{{2
+" UltiSnips {{{2
 let g:UltiSnipsDirectories="~/.vim/UltiSnips"
 let g:UltiSnipsEditSplit="vertical"
-
 " }}}
-" VIM-PANDOC {{{2
+" vim-pandoc {{{2
 let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
 let g:pandoc#command#autoexec_on_writes = 1
 let g:pandoc#command#autoexec_command = "Pandoc pdf --pdf-engine=lualatex -H ~/resources/notes.tex"
 let g:pandoc#after#modules#enabled = ["ultisnips", "tablemode"]
 " }}}
-" FZF {{{2
+" fzf {{{2
 map <leader>f :FZF<CR>
 " }}}
 " Goyo {{{2
 nnoremap <leader>G :Goyo<CR>
+" }}}
+" NERDTree {{{2
+map <C-n> :NERDTreeToggle<CR>
 " }}}
 " }}}
 
