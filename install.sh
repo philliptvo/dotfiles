@@ -42,11 +42,10 @@ setup_configs() {
 ##########################
 
 # update vim spell directory if necessary
-if [ $(diff '~/.vim/spell/en.utf-8.add vim/spell/en.utf-8.add') != "" ]; then
-  cp "~/.vim/spell/en.utf-8.add*" "vim/spell/"
+if [ "$(diff ~/.vim/spell/en.utf-8.add vim/spell/en.utf-8.add)" != "" ]; then
+  cp ~/.vim/spell/en.utf-8.add* vim/spell/
 fi
 
-update_spellcheck
 setup_configs
 
 # Setup for MacOS
