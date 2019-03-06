@@ -1,8 +1,8 @@
 priority -50
 
-##############
-# MATH STUFF #
-##############
+##################
+# EQUATION STUFF #
+##################
 
 snippet eq "Equation" b
 \begin{equation}
@@ -35,6 +35,10 @@ snippet alnn "Align without a number" b
 \end{align*}
 endsnippet
 
+snippet algn "align equal" w
+&= $0
+endsnippet
+
 snippet eqa "Equation array" b
 \begin{eqnarray}
 	${1:${VISUAL}} & ${2:${VISUAL}} & ${0:${VISUAL}}
@@ -63,16 +67,28 @@ ${2:\text{${3:text}}}$0
 endsnippet
 
 snippet ubr "underbrace" w
-\underbrace{${1:${VISUAL}}}_{${2:\mathclap{${3}}}}$0
+\underbrace{${1:${VISUAL}}}_{\math${2:c}lap{${3}}}$0
 endsnippet
 
 snippet obr "overbrace" w
-\overbrace{${1:${VISUAL}}}^{${2}}$0
+\overbrace{${1:${VISUAL}}}_{\math${2:c}lap{${3}}}$0
 endsnippet
 
-##################
-# EQUATION STUFF #
-##################
+snippet oset "overset" w
+\overset{${1:${VISUAL}}}{${2:=}}$0
+endsnippet
+
+snippet canc "cancel" w
+\cancel{${1:${VISUAL}}}$0
+endsnippet
+
+snippet canct "cancel to" w
+\cancelto{${2:0}}{${1:${VISUAL}}}$0
+endsnippet
+
+##############
+# MATH STUFF #
+##############
 
 snippet frac "fraction" w
 \frac{${1:${VISUAL}}}{${2}}$0
@@ -114,12 +130,24 @@ snippet dint "definite integral" w
 \int_{${1:-\infty}}^{${2:\infty}} ${4} ${3:dx}$0
 endsnippet
 
-snippet iint "indefinite integral" w
+snippet int "indefinite integral" w
 \int ${2} ${1:dx}$0
 endsnippet
 
-snippet sum "summation" w
+snippet '(\d+)int' "multiple indefinite integral" wr
+\\`!p snip.rv = 'i'*int(match.group(1))`nt ${2} ${1:dx}$0
+endsnippet
+
+snippet oint "closed integral" w
+\oint_{${1:C}} ${3} ${2:dx}$0
+endsnippet
+
+snippet sum "summation with range" w
 \sum_{${1:n=1}}^{${2:\infty}} $0
+endsnippet
+
+snippet prod "product with range" w
+\prod_{${1:n=1}}^{${2:\infty}} $0
 endsnippet
 
 snippet eval "evaluate from .. to .." w
@@ -127,11 +155,11 @@ snippet eval "evaluate from .. to .." w
 endsnippet
 
 snippet sr "x squared" i
-^2
+^2$0
 endsnippet
 
 snippet cb "x cubed" i
-^3
+^3$0
 endsnippet
 
 snippet '(\w+)~' "tilde character" r
@@ -188,51 +216,63 @@ snippet ** "dot product" wA
 \cdot $0
 endsnippet
 
-snippet <= "less than or equal" wA
+snippet <= "less than or equal" iA
 \leq $0
 endsnippet
 
-snippet >= "greater than or equal" wA
+snippet >= "greater than or equal" iA
 \geq $0
 endsnippet
 
-snippet << "much smaller than" wA
+snippet << "much smaller than" iA
 \ll $0
 endsnippet
 
-snippet >> "much greater than" wA
+snippet >> "much greater than" iA
 \gg $0
 endsnippet
 
-snippet => "implies..." wA
+snippet => "implies..." iA
 \implies $0
 endsnippet
 
-snippet -> "results in..." wA
+snippet <- "results from..." iA
+\leftarrow $0
+endsnippet
+
+snippet -> "results in..." iA
 \rightarrow $0
 endsnippet
 
-snippet LL "math caligraphy L" wA
-\mathcal{L}(${1:y})$0
+snippet iff "if and only if" w
+\iff $0
 endsnippet
 
 ################
 # CUSTOM STUFF #
 ################
 
-snippet '(\w)(\d|i)' "index" wr
-`!p snip.rv = match.group(1)`_`!p snip.rv = match.group(2)`$0
+snippet '(\w)arw' "up/down arrow" wr
+`!p
+dir = match.group(1)
+if dir == "u":
+	snip.rv = "\\uparrow"
+elif dir == "d":
+	snip.rv = "\\downarrow"
+`$0
 endsnippet
 
+priority 999
 # by Gilles Castel
-priority 1000
 snippet '((\d+)?(\\)?([A-Za-z]*)((\^|_)((\{\d+\})|(\d)))?)/' "symbol frac" wrA
-\\frac{`!p snip.rv = match.group(1)`}{$1}$0
+\frac{`!p snip.rv = match.group(1)`}{$1}$0
 endsnippet
 
 # Examples:
 # (...)/ ->  \frac{...}{|}
 # (Matching from the beginning of the line because some annoying bugs...)
+priority 1000
+# by Gilles Castel
 snippet '^.*\)/' "() frac" wrA
 `!p
 stripped = match.string[:-1]
@@ -245,6 +285,29 @@ while True:
 	i-=1
 snip.rv = stripped[0:i] + "\\frac{" + stripped[i+1:-1] + "}"
 `{$1}$0
+endsnippet
+
+snippet 'oint(cw|ccw)' "closed integral with direction" wr
+`!p
+d = match.group(1)
+if d == 'cw':
+	snip.rv = r'\varointclockwise'
+else:
+	snip.rv = r'\ointctrclockwise'
+`_{${1:C}} ${3} ${2:dx}$0
+endsnippet
+
+snippet 'sum([a-z])' "summation with no range" wr
+\sum_`!p snip.rv = match.group(1)` $0
+endsnippet
+
+snippet 'prod([a-z])' "product with no range" wr
+\prod_`!p snip.rv = match.group(1)` $0
+endsnippet
+
+priority -1000
+snippet '(\w|\d)' "index" ir
+_`!p snip.rv = match.group(1)`$0
 endsnippet
 
 # vim:ft=snippets:
