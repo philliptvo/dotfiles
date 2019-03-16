@@ -15,6 +15,7 @@ Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'vim-pandoc/vim-pandoc-after'
 Plug 'dhruvasagar/vim-table-mode'
 Plug 'junegunn/goyo.vim'
+Plug 'dkarter/bullets.vim'
 " FZF
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': '.install --all' }
 Plug 'junegunn/fzf.vim'
@@ -24,20 +25,35 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'scrooloose/nerdtree'
 call plug#end()
 " }}}
-" LEADER {{{
+" LEADER {{{1
 let mapleader="," " leader is comma
 
-" Markdown Headings
+" Markdown Headings {{{2
 nnoremap <leader>1 m`yypVr=``
 nnoremap <leader>2 m`yypVr-``
 nnoremap <leader>3 ^i### <esc>
 nnoremap <leader>4 ^i#### <esc>
 nnoremap <leader>5 ^i##### <esc>
-
-" Notes (tmp)
-nnoremap <leader>pl :!pandoc --pdf-engine=lualatex -H ~/resources/notes.tex -o %:r.pdf %<CR>
+" }}}
+" Notes {{{2
 nnoremap <leader>pp :!pandoc --pdf-engine=lualatex --filter pandoc-citeproc --bibliography=%:r.bib -H ~/resources/notes.tex -o %:r.pdf %<CR>
-nnoremap <leader>v :!open %:r.pdf 2>&1 > /dev/null &<CR><CR>
+nnoremap <leader>o :!open %:r.pdf 2>&1 > /dev/null &<CR><CR>
+" }}}
+" Quickediting {{{2
+nnoremap <leader>ev <C-w>s<C-w>j<C-w>L:e $MYVIMRC<CR>
+nnoremap <leader>es <C-w>s<C-w>j<C-w>L:e ~/.vim/UltiSnips/<CR>
+nnoremap <leader>ed <C-w>s<C-w>j<C-w>L:e ~/Dropbox/<CR>
+nnoremap <leader>ew <C-w>s<C-w>j<C-w>L:e ~/Dropbox/3B/<CR>
+nnoremap <leader>en <C-w>s<C-w>j<C-w>L:e ~/Dropbox/Notes<CR>
+" }}}
+" Misc {{{2
+nnoremap <leader><space> :nohlsearch<CR>
+nnoremap <leader>s :set spell!<cr>
+nnoremap <leader>w :w<cr>
+nnoremap <leader>q :q<cr>
+nnoremap <leader>Q :q!<cr>
+nnoremap <leader>Z :wq<cr>
+" }}}
 " }}}
 " FILETYPES {{{
 filetype plugin on
@@ -91,19 +107,10 @@ inoremap JK <esc>
 
 " Spellcheck
 set spelllang=en
-nnoremap<leader>s :set spell!<cr>
-" }}}
-" QUICKEDITING {{{
-nnoremap <leader>ev <C-w>s<C-w>j<C-w>L:e $MYVIMRC<CR>
-nnoremap <leader>es <C-w>s<C-w>j<C-w>L:e ~/.vim/UltiSnips/<CR>
-nnoremap <leader>ed <C-w>s<C-w>j<C-w>L:e ~/Dropbox/<CR>
-nnoremap <leader>ew <C-w>s<C-w>j<C-w>L:e ~/Dropbox/3B/<CR>
-nnoremap <leader>en <C-w>s<C-w>j<C-w>L:e ~/Dropbox/Notes<CR>
 " }}}
 " SEARCHING {{{
 set incsearch
 set hlsearch
-nnoremap <leader><space> :nohlsearch<CR>
 " }}}
 " TEXT FORMATTING {{{
 set tabstop=4
@@ -132,13 +139,9 @@ noremap <Right> <NOP>
 nnoremap H ^
 nnoremap L g_
 
-" Quickfix
-nnoremap ]q :cnext<cr>zz
-nnoremap [q :cprev<cr>zz
-
 " Open new line above/below current line
-nnoremap o o<esc>
-nnoremap O O<esc>
+"nnoremap o o<esc>
+"nnoremap O O<esc>
 " }}}
 " FOLDING {{{
 set foldenable
@@ -150,6 +153,18 @@ set foldnestmax=10
 nnoremap <space> za
 nnoremap <leader>z zMzvzz
 " }}}
+" EXTENDED TEXT OBJECTS {{{
+let s:items = [ "*", "_", "$" ]
+for item in s:items
+    exe "nnoremap yi".item." T".item."yt".item
+    exe "nnoremap ya".item." F".item."yf".item
+    exe "nnoremap ci".item." T".item."ct".item
+    exe "nnoremap ca".item." F".item."cf".item
+    exe "nnoremap di".item." T".item."dt".item
+    exe "nnoremap da".item." F".item."df".item
+    exe "nnoremap vi".item." T".item."vt".item
+    exe "nnoremap va".item." F".item."vf".item
+endfor
 " FUNCTIONS {{{1
 " Fix Spelling Error {{{2
 function! FixLastSpellCheckError()
@@ -158,6 +173,19 @@ endfunction
 
 nnoremap <leader>sp :call FixLastSpellCheckError()<CR>
 "}}}
+" Toggle Pandoc Auto-compile {{{2
+function! ToggleAutoCompile()
+    if g:pandoc#command#autoexec_on_writes
+        let g:pandoc#command#autoexec_on_writes = 0
+        echo "pandoc auto-compiling off."
+    else
+        let g:pandoc#command#autoexec_on_writes = 1
+        echo "pandoc auto-compiling on."
+    endif
+endfunction
+
+nnoremap <silent> <leader>ac :call ToggleAutoCompile()<CR>
+" }}}
 " }}}
 " TMUX {{{
 if exists('$TMUX')
@@ -185,23 +213,24 @@ else
   map <C-l> <C-w>l
 endif
 " }}}
-" ALE {{{
-let g:ale_sign_column_always = 1
-map <leader>at :ALEToggle<cr>
-" }}}
 " PLUGINS {{{1
 " auto-pairs {{{2
 let g:AutoPairsShortcutToggle = '<leader>ap'
 " }}}
 " UltiSnips {{{2
-let g:UltiSnipsDirectories="~/.vim/UltiSnips"
+nnoremap <leader>ue :UltiSnipsEdit<cr>
+nnoremap <leader>ur :call UltiSnips#RefreshSnippets()<cr>
+
+let g:UltiSnipsSnippetDir="~/dotfiles/vim/UltiSnips"
 let g:UltiSnipsEditSplit="vertical"
 " }}}
 " vim-pandoc {{{2
 let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
-let g:pandoc#command#autoexec_on_writes = 1
+let g:pandoc#command#autoexec_on_writes = 0
 let g:pandoc#command#autoexec_command = "Pandoc pdf --pdf-engine=lualatex -H ~/resources/notes.tex"
 let g:pandoc#after#modules#enabled = ["ultisnips", "tablemode"]
+
+nnoremap <leader>pd :pandoc 
 " }}}
 " fzf {{{2
 map <leader>f :FZF<CR>
@@ -211,6 +240,17 @@ nnoremap <leader>G :Goyo<CR>
 " }}}
 " NERDTree {{{2
 map <C-n> :NERDTreeToggle<CR>
+" }}}
+" ALE {{{2
+let g:ale_sign_column_always = 1
+map <leader>at :ALEToggle<cr>
+" }}}
+" Bullets {{{
+let g:bullets_enabled_file_types = [
+    \ 'markdown',
+    \ 'text',
+    \ 'gitcommit',
+    \]
 " }}}
 " }}}
 
