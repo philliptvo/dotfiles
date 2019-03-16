@@ -21,6 +21,8 @@ alias ....='cd ../../..'
 alias -- -='cd -'
 
 alias g='git'
+alias em='neomutt'
+alias fm='ranger'
 
 alias ni='npm install'
 alias nu='npm uninstall'
