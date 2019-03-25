@@ -107,6 +107,7 @@ inoremap JK <esc>
 
 " Spellcheck
 set spelllang=en
+inoremap <C-l> <C-g>u<Esc>[s1z=`]a<C-g>u
 " }}}
 " SEARCHING {{{
 set incsearch
@@ -223,6 +224,10 @@ nnoremap <leader>ur :call UltiSnips#RefreshSnippets()<cr>
 
 let g:UltiSnipsSnippetDir="~/dotfiles/vim/UltiSnips"
 let g:UltiSnipsEditSplit="vertical"
+
+let g:UltiSnipsExpandTrigger = '<tab>'
+let g:UltiSnipsJumpForwardTrigger = '<tab>'
+let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
 " }}}
 " vim-pandoc {{{2
 let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
