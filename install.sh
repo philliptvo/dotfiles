@@ -57,11 +57,12 @@ if [ "$(diff ~/.vim/spell/en.utf-8.add vim/spell/en.utf-8.add)" != "" ]; then
   cp ~/.vim/spell/en.utf-8.add* vim/spell/
 fi
 
-read -p "Install config files in home directory? (y/n) " update_config
+setup
+cp_configs
 
-if [ "${update_config}" = "y" ]; then
-  setup
-  cp_configs
+read -p "Install vim plugins? (Y/n) " update_config
+
+if [ "$(echo ${update_config} | awk '{print tolower($0)}')" = "y" ]; then
   vim +PlugInstall +qall
 fi
 
@@ -69,8 +70,11 @@ fi
 if [ "${OS}" = "Darwin" ]; then
   #[ -f ${HOME}/.bash_profile -o -L ${HOME}/.bash_profile ] && rm ${HOME}/.bash_profile
   mv ${HOME}/.bashrc ${HOME}/.bash_profile
+  source ~/.bash_profile
 
   read -p "Install from brewfile (y/n)? " update_brewfile
+else
+  source ~/.bashrc
 fi
 
 if [ "${update_brewfile}" = "y" ]; then
