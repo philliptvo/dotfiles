@@ -1,5 +1,24 @@
 priority -50
 
+global !p
+texMathZones = ['texMathZone'+x for x in ['A', 'AS', 'B', 'BS', 'C', 'CS', 'D', 'DS', 'E', 'ES', 'F', 'FS', 'G', 'GS', 'H', 'HS', 'I', 'IS', 'J', 'JS', 'K', 'KS', 'L', 'LS', 'DS', 'V', 'W', 'X', 'Y', 'Z']]
+
+texIgnoreMathZones = ['texMathText']
+
+texMathZoneIds = vim.eval('map('+str(texMathZones)+", 'hlID(v:val)')")
+texIgnoreMathZoneIds = vim.eval('map('+str(texIgnoreMathZones)+", 'hlID(v:val)')")
+
+ignore = texIgnoreMathZoneIds[0]
+
+def math():
+	synstackids = vim.eval("synstack(line('.'), col('.') - (col('.')>=2 ? 1 : 0))")
+	try:
+		first = next(i for i in reversed(synstackids) if i in texIgnoreMathZoneIds or i in texMathZoneIds)
+		return first != ignore
+	except StopIteration:
+		return False
+endglobal
+
 ##################
 # EQUATION STUFF #
 ##################
@@ -101,10 +120,6 @@ endsnippet
 # MATH STUFF #
 ##############
 
-snippet frac "fraction" w
-\frac{${1:${VISUAL}}}{${2}}$0
-endsnippet
-
 snippet lr "left right" w
 \left${1} ${0:${VISUAL}} \right${1}
 endsnippet
@@ -189,35 +204,43 @@ snippet eval "evaluate from .. to .." w
 \eval{${3:${VISUAL}}}_{${1:-\infty}}^{${2:\infty}}$0
 endsnippet
 
-snippet sr "x squared" i
+context "math()"
+snippet sr "x squared" iA
 ^2$0
 endsnippet
 
-snippet cb "x cubed" i
+context "math()"
+snippet cb "x cubed" iA
 ^3$0
 endsnippet
 
-snippet inv "inverse" i
+context "math()"
+snippet inv "inverse" iA
 ^{-1}$0
 endsnippet
 
-snippet '(\w+)~' "tilde character" r
+context "math()"
+snippet '(\w+)~' "tilde character" rA
 \tilde{`!p snip.rv = match.group(1)`}$0
 endsnippet
 
-snippet '(\w+)-' "bar character" r
+context "math()"
+snippet '(\w+)-' "bar character" rA
 \bar{`!p snip.rv = match.group(1)`}$0
 endsnippet
 
-snippet exp "exponential" w
+context "math()"
+snippet exp "exponential" wA
 e^{${1:${VISUAL}}}$0
 endsnippet
 
-snippet norm "norm" w
+context "math()"
+snippet norm "norm" wA
 \|${1:${VISUAL}}\|$0
 endsnippet
 
-snippet srt "square root" w
+context "math()"
+snippet sq "square root" wA
 \sqrt{${1:${VISUAL}}}$0
 endsnippet
 
@@ -225,73 +248,103 @@ snippet oop "circle operator" w
 \o${1:t}${1/(t)$|(p)$|(d)$/(?1:imes)(?2:lus)(?3:ot)/} $0
 endsnippet
 
-######################
-# AUTOCOMPLETE STUFF #
-######################
-
-snippet $ "math section" wA
-\$${1:${VISUAL}}\$$0
+snippet mk "Math" wA
+$${1}$`!p
+if t[2] and t[2][0] not in [',', '.', '?', '-', ' ']:
+	snip.rv = ' '
+else:
+	snip.rv = ''
+`$2
 endsnippet
 
-snippet \$ "math block" bA
-\$\$
-${1:${VISUAL}}$0
-\$\$
+snippet dm "Math" wA
+\[
+$1
+.\] $0
 endsnippet
 
+context "math()"
+snippet // "fraction" iA
+\frac{${1:${VISUAL}}}{${2}}$0
+endsnippet
+
+context "math()"
 snippet __ "subscript" iA
-_{${1:${VISUAL}}}$0
+_{${1}}$0
 endsnippet
 
-snippet ^^ "superscript" iA
-^{${1:${VISUAL}}}$0
+context "math()"
+snippet '([A-Za-z])(\d)' "auto subscript" wrA
+`!p snip.rv = match.group(1)`_`!p snip.rv = match.group(2)`
 endsnippet
 
+context "math()"
+snippet '([A-Za-z])_(\d\d)' "auto subscript2" wrA
+`!p snip.rv = match.group(1)`_{`!p snip.rv = match.group(2)`}
+endsnippet
+
+context "math()"
+snippet td "to the .. power" iA
+^{${1}}$0
+endsnippet
+
+context "math()"
 snippet dg "hermition" i
 ^\dag$0
 endsnippet
 
+context "math()"
 snippet ooo "infinity" iA
 \infty$0
 endsnippet
 
+context "math()"
 snippet xx "times" iA
 \times $0
 endsnippet
 
+context "math()"
 snippet ** "dot product" iA
 \cdot $0
 endsnippet
 
+context "math()"
 snippet <= "less than or equal" iA
 \leq $0
 endsnippet
 
+context "math()"
 snippet >= "greater than or equal" iA
 \geq $0
 endsnippet
 
+context "math()"
 snippet << "much smaller than" iA
 \ll $0
 endsnippet
 
+context "math()"
 snippet >> "much greater than" iA
 \gg $0
 endsnippet
 
+context "math()"
 snippet => "implies..." iA
 \implies $0
 endsnippet
 
+context "math()"
 snippet <- "results from..." iA
 \leftarrow $0
 endsnippet
 
+context "math()"
 snippet -> "results in..." iA
 \rightarrow $0
 endsnippet
 
-snippet iff "if and only if" w
+context "math()"
+snippet iff "if and only if" wA
 \iff $0
 endsnippet
 
@@ -299,18 +352,23 @@ endsnippet
 # CUSTOM STUFF #
 ################
 
-snippet '(\w)arw' "up/down arrow" wr
+snippet '(\w)arw' "directional arrow" wr
 `!p
 dir = match.group(1)
 if dir == "u":
 	snip.rv = "\\uparrow"
 elif dir == "d":
 	snip.rv = "\\downarrow"
+elif dir == "r":
+	snip.rv = "\\rightarrow"
+elif dir == "l":
+	snip.rv = "\\leftarrow"
 `$0
 endsnippet
 
 priority 999
 # by Gilles Castel
+context "math()"
 snippet '((\d+)?(\\)?([A-Za-z]*)((\^|_)((\{\d+\})|(\d)))?)/' "symbol frac" wrA
 \frac{`!p snip.rv = match.group(1)`}{$1}$0
 endsnippet
@@ -320,6 +378,7 @@ endsnippet
 # (Matching from the beginning of the line because some annoying bugs...)
 priority 1000
 # by Gilles Castel
+context "math()"
 snippet '^.*\)/' "() frac" wrA
 `!p
 stripped = match.string[:-1]
@@ -334,6 +393,7 @@ snip.rv = stripped[0:i] + "\\frac{" + stripped[i+1:-1] + "}"
 `{$1}$0
 endsnippet
 
+context "math()"
 snippet 'oint(cw|ccw)' "closed integral with direction" wr
 `!p
 d = match.group(1)
@@ -344,17 +404,19 @@ else:
 `_{${1:C}} ${3} ${2:dx}$0
 endsnippet
 
+context "math()"
 snippet 'sum([a-z])' "summation with no range" wr
 \sum_`!p snip.rv = match.group(1)` $0
 endsnippet
 
+context "math()"
 snippet 'prod([a-z])' "product with no range" wr
 \prod_`!p snip.rv = match.group(1)` $0
 endsnippet
 
-priority -1000
-snippet '(\w|\d)' "index" ir
-_`!p snip.rv = match.group(1)`$0
-endsnippet
+#priority -1000
+#snippet '(\w|\d)' "index" ir
+#_`!p snip.rv = match.group(1)`$0
+#endsnippet
 
 # vim:ft=snippets:
