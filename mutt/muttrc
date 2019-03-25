@@ -1,8 +1,8 @@
 # Folder hooks
-folder-hook 'account.com.gmail.philliptvo' 'source ~/.mail/account.com.gmail.philliptvo'
+folder-hook 'account.com.gmail.phillip.t.vo' 'source ~/.mutt/.account.com.gmail.phillip.t.vo'
 
 # Default account
-source ~/.mail/account.com.gmail.philliptvo
+source ~/.mutt/.account.com.gmail.phillip.t.vo
 
 bind index,pager i noop
 bind index,pager g noop
