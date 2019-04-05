@@ -2,7 +2,8 @@
 folder-hook 'account.com.gmail.phillip.t.vo' 'source ~/.mutt/.account.com.gmail.phillip.t.vo'
 
 # Default account
-source ~/.mutt/.account.com.gmail.phillip.t.vo
+#source ~/.mutt/.account.com.gmail.phillip.t.vo
+source "gpg -dq $HOME/.mutt/.account.com.gmail.phillip.t.vo.gpg |"
 
 bind index,pager i noop
 bind index,pager g noop
