@@ -66,11 +66,11 @@ augroup filetypes
 
     au FileType html,xhtml,xml,css setlocal ts=2 sts=2 sw=2 et ai
     au FileType javascript setlocal ts=2 sts=2 sw=2 et ai si noci 
-    au FileType python setlocal ts=4 sts=4 sw=4 et ai si cinwords=if,elif,else,for,while,try,except,finally,def,class
+
+    au FileType python setlocal ts=4 sts=4 sw=4 et ai si cinwords=if,elif,else,for,while,try,except,finally,def,class foldmethod=indent foldlevel=99
 
     au FileType pandoc setlocal syn=off
-
-    au FileType python setlocal foldmethod=indent foldlevel=99
+    au FileType pandoc let b:autopairs_enabled = 0
 
     au BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
@@ -99,6 +99,8 @@ set backspace=2 " backspace over everything
 set scrolloff=5
 
 set noswapfile
+
+let g:tex_flavor='latex'
 
 " jk is escape (only for insert mode)
 inoremap jk <esc>
