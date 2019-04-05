@@ -41,11 +41,24 @@ setup() {
 }
 
 cp_configs() {
+  mkdir -p ~/.config
+
   for config in ".config/"*; do
     targetfile=$(basename "${config}")
     cp -r "${config}" "${HOME}/.config/"
     echo "Copied config files for ${targetfile}"
   done
+}
+
+cp_scripts() {
+  mkdir -p ~/.scripts
+
+  for script in ".scripts/"*; do
+    targetfile=$(basename "${script}")
+    cp -r "${script}" "${HOME}/.scripts/"
+  done
+
+  echo "Copied scripts"
 }
 
 ##########################
@@ -59,6 +72,7 @@ fi
 
 setup
 cp_configs
+cp_scripts
 
 read -p "Install vim plugins? (Y/n) " update_config
 
@@ -72,7 +86,7 @@ if [ "${OS}" = "Darwin" ]; then
   mv ${HOME}/.bashrc ${HOME}/.bash_profile
   source ~/.bash_profile
 
-  read -p "Install from brewfile (y/n)? " update_brewfile
+  read -p "Install from brewfile (Y/n)? " update_brewfile
 else
   source ~/.bashrc
 fi
