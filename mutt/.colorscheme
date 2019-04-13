@@ -8,10 +8,10 @@ color header brightyellow default "From: "
 color header brightyellow default "Subject: "
 color header brightyellow default "Date: "
 
-color quoted green default
-color quoted1 cyan default
-color quoted2 green default
-color quoted3 cyan default
+color quoted green              default
+color quoted1 cyan              default
+color quoted2 green             default
+color quoted3 cyan              default
 
 color error     red             default         # error messages
 color message   white           default         # message  informational messages
@@ -21,8 +21,10 @@ color tree      red             default         # the "tree" display of threads 
 color search    white           blue            # search matches found with search within the internal pager
 color markers   red             default         # The markers indicate a wrapped line hen showing messages with looong lines
 
-color index     yellow default  '~O'
-color index     yellow default  '~N'
+color index     yellow default  '.*'
 color index     brightred       default '~F'    # Flagged Messages are important!
 color index     blue default    '~D'            # Deleted Mails - use dark color as these are already "dealt with"
+color index_author red          default '.*'
+color index_number blue         default
+color index_subject cyan        default '.*'
 # }}}
