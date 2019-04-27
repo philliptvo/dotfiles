@@ -21,8 +21,9 @@ color tree      red             default         # the "tree" display of threads 
 color search    white           blue            # search matches found with search within the internal pager
 color markers   red             default         # The markers indicate a wrapped line hen showing messages with looong lines
 
-color index     yellow default  '.*'
-color index     brightred       default '~F'    # Flagged Messages are important!
+color index     red default     '.*'
+color index     green default    '~N' # new messages
+color index     brightred default '~F'    # Flagged Messages are important!
 color index     blue default    '~D'            # Deleted Mails - use dark color as these are already "dealt with"
 color index_author red          default '.*'
 color index_number blue         default

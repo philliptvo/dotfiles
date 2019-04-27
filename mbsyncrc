@@ -1,0 +1,51 @@
+# Gmail Account
+IMAPAccount philliptvo
+Host imap.gmail.com
+Port 993
+User phillip.t.vo@gmail.com
+PassCmd "gpg -qd ~/.isync/isync_philliptvo.gpg"
+SSLType IMAPS
+AuthMechs LOGIN
+CertificateFile /usr/local/etc/openssl/cert.pem
+
+IMAPStore philliptvo-remote
+Account philliptvo
+
+MaildirStore philliptvo-local
+Path ~/Mail/philliptvo/
+Inbox ~/Mail/philliptvo/INBOX
+Subfolders Verbatim
+
+Channel philliptvo
+Master :philliptvo-remote:
+Slave :philliptvo-local:
+Create Both
+Expunge Both
+Patterns * !"[Gmail]/All Mail" !"[Gmail]/Important" !"[Gmail]/Starred" !"[Gmail]/Bin"
+SyncState *
+
+# UWaterloo Account
+IMAPAccount ptgvo
+Host imap-mail.outlook.com
+Port 993
+User ptgvo@edu.uwaterloo.ca
+PassCmd "gpg -qd ~/.isync/isync_ptgvo.gpg"
+SSLType IMAPS
+AuthMechs LOGIN
+CertificateFile /usr/local/etc/openssl/cert.pem
+
+IMAPStore ptgvo-remote
+Account ptgvo
+
+MaildirStore ptgvo-local
+Path ~/Mail/ptgvo/
+Inbox ~/Mail/ptgvo/INBOX
+Subfolders Verbatim
+
+Channel ptgvo
+Master :ptgvo-remote:
+Slave :ptgvo-local:
+Create Both
+Expunge Both
+Patterns *
+SyncState *

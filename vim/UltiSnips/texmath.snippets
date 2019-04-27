@@ -54,17 +54,6 @@ snippet alnn "Align without a number" b
 \end{align*}
 endsnippet
 
-snippet algn "align" w
-&${1:=}`!p
-options = {	'a':'\\approx',
-			'l':'\\le',
-			'g':'\\ge',
-			'p':'\\propto',
-			'n':'\\neq'}
-if t[1] in options.keys():
-	t[1] = options[t[1]]` $0
-endsnippet
-
 snippet eqa "Equation array" b
 \begin{eqnarray}
 	${1:${VISUAL}} & ${2:${VISUAL}} & ${0:${VISUAL}}
@@ -98,8 +87,7 @@ endsnippet
 
 snippet <- "results from..." iA
 $\leftarrow$ $0
-endsnippet
-
+endsnippet 
 snippet -> "results in..." iA
 $\rightarrow$ $0
 endsnippet
@@ -107,6 +95,23 @@ endsnippet
 ################
 # FORMAT STUFF #
 ################
+
+context "math()"
+snippet == "equals" iA
+&= $1 \\\\
+endsnippet
+
+context "math()"
+snippet algn "align" w
+&${1:=}`!p
+options = {	'a':'\\approx',
+			'l':'\\le',
+			'g':'\\ge',
+			'p':'\\propto',
+			'n':'\\neq'}
+if t[1] in options.keys():
+	t[1] = options[t[1]]` ${2} \\\\
+endsnippet
 
 context "math()"
 snippet ubr "underbrace" w
@@ -143,32 +148,32 @@ endsnippet
 ##############
 
 context "math()"
-snippet lr "left right" wA
+snippet lr "left right" i
 \left${1} ${0:${VISUAL}} \right${1}
 endsnippet
 
 context "math()"
-snippet lr( "left( right)" wA
+snippet lr( "left( right)" i
 \left( ${1:${VISUAL}} \right)$0
 endsnippet
 
 context "math()"
-snippet lr| "left| right|" wA
+snippet lr| "left| right|" i
 \left| ${1:${VISUAL}} \right|$0
 endsnippet
 
 context "math()"
-snippet lr{ "left\{ right\}" wA
+snippet lr{ "left\{ right\}" i
 \left\{ ${1:${VISUAL}} \right\}$0
 endsnippet
 
 context "math()"
-snippet lr[ "left[ right]" wA
+snippet lr[ "left[ right]" i
 \left[ ${1:${VISUAL}} \right]$0
 endsnippet
 
 context "math()"
-snippet lra "langle rangle" wA
+snippet lra "langle rangle" i
 \langle ${1:${VISUAL}} \rangle$0
 endsnippet
 
@@ -233,14 +238,34 @@ snippet oint "closed integral" wA
 endsnippet
 
 context "math()"
+snippet 'oint(cw|ccw)' "closed integral with direction" wrA
+`!p
+d = match.group(1)
+if d == 'cw':
+	snip.rv = r'\varointclockwise'
+else:
+	snip.rv = r'\ointctrclockwise'
+`_{${1:C}} ${3} ${2:dx}$0
+endsnippet
+
+context "math()"
 snippet sum "summation with range" wA
 \sum_{${1:n=1}}^{${2:\infty}} $0
+endsnippet
+
+context "math()"
+snippet 'sum([a-z])' "summation with no range" wrA
+\sum_`!p snip.rv = match.group(1)` $0
 endsnippet
 
 context "math()"
 snippet prod "product with range" wA
 \prod_{${1:n=1}}^{${2:\infty}} $0
 endsnippet
+
+context "math()"
+snippet 'prod([a-z])' "product with no range" wrA
+\prod_`!p snip.rv = match.group(1)` $0 endsnippet
 
 context "math()""
 snippet eval "evaluate from .. to .." wA
@@ -381,219 +406,6 @@ snippet iff "if and only if" wA
 \iff $0
 endsnippet
 
-####################
-# GREEK CHARACTERS #
-####################
-
-context "math()"
-snippet 'G "Gamma" iA
-\Gamma
-endsnippet
-
-context "math()"
-snippet 'D "Delta" iA
-\Delta
-endsnippet
-
-context "math()"
-snippet 'L "Lambda" iA
-\Lambda
-endsnippet
-
-context "math()"
-snippet 'F "Phi" iA
-\Phi
-endsnippet
-
-context "math()"
-snippet 'P "Pi" iA
-\Pi
-endsnippet
-
-context "math()"
-snippet 'C "Psi" iA
-\Psi
-endsnippet
-
-context "math()"
-snippet 'S "Sigma" iA
-\Sigma
-endsnippet
-
-context "math()"
-snippet 'U "Theta" iA
-\Theta
-endsnippet
-
-context "math()"
-snippet 'Y "Upsilon" iA
-\Upsilon
-endsnippet
-
-context "math()"
-snippet 'J "Xi" iA
-\Xi
-endsnippet
-
-context "math()"
-snippet 'V "Omega" iA
-\Omega
-endsnippet
-
-context "math()"
-snippet 'a "alpha" iA
-\alpha
-endsnippet
-
-context "math()"
-snippet 'b "beta" iA
-\beta
-endsnippet
-
-context "math()"
-snippet 'g "gamma" iA
-\gamma
-endsnippet
-
-context "math()"
-snippet 'd "delta" iA
-\delta
-endsnippet
-
-context "math()"
-snippet 'e "epsilon" iA
-\epsilon
-endsnippet
-
-context "math()"
-snippet 'z "zeta" iA
-\zeta
-endsnippet
-
-context "math()"
-snippet 'h "eta" iA
-\eta
-endsnippet
-
-context "math()"
-snippet 'u "theta" iA
-\theta
-endsnippet
-
-context "math()"
-snippet 'i "iota" iA
-\iota
-endsnippet
-
-context "math()"
-snippet 'k "kappa" iA
-\kappa
-endsnippet
-
-context "math()"
-snippet 'l "lambda" iA
-\lambda
-endsnippet
-
-context "math()"
-snippet 'm "mu" iA
-\mu
-endsnippet
-
-context "math()"
-snippet 'n "nu" iA
-\nu
-endsnippet
-
-context "math()"
-snippet 'j "xi" iA
-\xi
-endsnippet
-
-context "math()"
-snippet 'p "pi" iA
-\pi
-endsnippet
-
-context "math()"
-snippet 'r "rho" iA
-\rho
-endsnippet
-
-context "math()"
-snippet 's "sigma" iA
-\sigma
-endsnippet
-
-context "math()"
-snippet 't "tau" iA
-\tau
-endsnippet
-
-context "math()"
-snippet 'y "upsilon" iA
-\upsilon
-endsnippet
-
-context "math()"
-snippet 'f "phi" iA
-\phi
-endsnippet
-
-context "math()"
-snippet 'x "chi" iA
-\chi
-endsnippet
-
-context "math()"
-snippet 'c "psi" iA
-\psi
-endsnippet
-
-context "math()"
-snippet 'v "omega" iA
-\omega
-endsnippet
-
-context "math()"
-snippet \dg "digamma" iA
-\digamma
-endsnippet
-
-context "math()"
-snippet \ve "varepsilon" iA
-\varepsilon
-endsnippet
-
-context "math()"
-snippet \vf "varphi" iA
-\varphi
-endsnippet
-
-context "math()"
-snippet \vp "varpi" iA
-\varpi
-endsnippet
-
-context "math()"
-snippet \vr "varrho" iA
-\varrho
-endsnippet
-
-context "math()"
-snippet \vs "varsigma" iA
-\varsigma
-endsnippet
-
-context "math()"
-snippet \vu "vartheta" iA
-\vartheta
-endsnippet
-
-################
-# CUSTOM STUFF #
-################
-
 context "math()"
 snippet '(\w)arw' "directional arrow" wrA
 `!p
@@ -609,15 +421,229 @@ elif dir == "l":
 `$0
 endsnippet
 
+####################
+# GREEK CHARACTERS #
+####################
+
 context "math()"
-snippet frac "fraction" iA
-\frac{${1:${VISUAL}}}{${2}}$0
+snippet \G "Gamma" iA
+\Gamma
 endsnippet
 
-priority 999
+context "math()"
+snippet \D "Delta" iA
+\Delta
+endsnippet
+
+context "math()"
+snippet \L "Lambda" iA
+\Lambda
+endsnippet
+
+context "math()"
+snippet \F "Phi" iA
+\Phi
+endsnippet
+
+context "math()"
+snippet \P "Pi" iA
+\Pi
+endsnippet
+
+context "math()"
+snippet \C "Psi" iA
+\Psi
+endsnippet
+
+context "math()"
+snippet \S "Sigma" iA
+\Sigma
+endsnippet
+
+context "math()"
+snippet \U "Theta" iA
+\Theta
+endsnippet
+
+context "math()"
+snippet \Y "Upsilon" iA
+\Upsilon
+endsnippet
+
+context "math()"
+snippet \J "Xi" iA
+\Xi
+endsnippet
+
+context "math()"
+snippet \V "Omega" iA
+\Omega
+endsnippet
+
+context "math()"
+snippet \a "alpha" iA
+\alpha
+endsnippet
+
+context "math()"
+snippet \b "beta" iA
+\beta
+endsnippet
+
+context "math()"
+snippet \g "gamma" iA
+\gamma
+endsnippet
+
+context "math()"
+snippet \d "delta" iA
+\delta
+endsnippet
+
+context "math()"
+snippet \e "epsilon" iA
+\epsilon
+endsnippet
+
+context "math()"
+snippet \z "zeta" iA
+\zeta
+endsnippet
+
+context "math()"
+snippet \h "eta" iA
+\eta
+endsnippet
+
+context "math()"
+snippet \u "theta" iA
+\theta
+endsnippet
+
+context "math()"
+snippet \i "iota" iA
+\iota
+endsnippet
+
+context "math()"
+snippet \k "kappa" iA
+\kappa
+endsnippet
+
+context "math()"
+snippet \l "lambda" iA
+\lambda
+endsnippet
+
+context "math()"
+snippet \m "mu" iA
+\mu
+endsnippet
+
+context "math()"
+snippet \n "nu" iA
+\nu
+endsnippet
+
+context "math()"
+snippet \j "xi" iA
+\xi
+endsnippet
+
+context "math()"
+snippet \p "pi" iA
+\pi
+endsnippet
+
+context "math()"
+snippet \r "rho" iA
+\rho
+endsnippet
+
+context "math()"
+snippet \s "sigma" iA
+\sigma
+endsnippet
+
+context "math()"
+snippet \t "tau" iA
+\tau
+endsnippet
+
+context "math()"
+snippet \y "upsilon" iA
+\upsilon
+endsnippet
+
+context "math()"
+snippet \f "phi" iA
+\phi
+endsnippet
+
+context "math()"
+snippet \x "chi" iA
+\chi
+endsnippet
+
+context "math()"
+snippet \c "psi" iA
+\psi
+endsnippet
+
+context "math()"
+snippet \v "omega" iA
+\omega
+endsnippet
+
+priority -25
+context "math()"
+snippet \\dg "digamma" iA
+\digamma
+endsnippet
+
+context "math()"
+snippet \\ve "varepsilon" iA
+\varepsilon
+endsnippet
+
+context "math()"
+snippet \\vf "varphi" iA
+\varphi
+endsnippet
+
+context "math()"
+snippet \\vp "varpi" iA
+\varpi
+endsnippet
+
+context "math()"
+snippet \\vr "varrho" iA
+\varrho
+endsnippet
+
+context "math()"
+snippet \\vs "varsigma" iA
+\varsigma
+endsnippet
+
+context "math()"
+snippet \\vu "vartheta" iA
+\vartheta
+endsnippet
+
+#############
+# FRACTIONs #
+#############
+
+priority 100
+context "math()"
+snippet // "Fraction" iA
+\frac{$1}{$2}$0
+endsnippet
+
 # by Gilles Castel
 context "math()"
-snippet '((\d+)?(\\)?([A-Za-z]*)((\^|_)((\{\d+\})|(\d)))?)/' "symbol frac" wrA
+snippet '((\d+)|(\d*)(\\)?([A-Za-z]+)((\^|_)(\{\d+\}|\d))*)/' "symbol frac" wrA
 \frac{`!p snip.rv = match.group(1)`}{$1}$0
 endsnippet
 
@@ -641,25 +667,91 @@ snip.rv = stripped[0:i] + "\\frac{" + stripped[i+1:-1] + "}"
 `{$1}$0
 endsnippet
 
+###################
+# PHYSICS PACKAGE #
+###################
+
+priority 0
 context "math()"
-snippet 'oint(cw|ccw)' "closed integral with direction" wr
-`!p
-d = match.group(1)
-if d == 'cw':
-	snip.rv = r'\varointclockwise'
-else:
-	snip.rv = r'\ointctrclockwise'
-`_{${1:C}} ${3} ${2:dx}$0
+snippet dv "Derivative" wA
+\dv{${1}}{${2}}
+endsnippet
+
+priority 50
+context "math()"
+snippet pdv "Partial Derivative" wA
+\pdv{${1}}{${2}}
 endsnippet
 
 context "math()"
-snippet 'sum([a-z])' "summation with no range" wr
-\sum_`!p snip.rv = match.group(1)` $0
+snippet '((\d+)?(\\)?([A-Za-z]*)((\^|_)((\{\d+\})|(\d)))?)vec' "vector with arrow" rA
+\va{`!p snip.rv = match.group(1)`}$0
 endsnippet
 
 context "math()"
-snippet 'prod([a-z])' "product with no range" wr
-\prod_`!p snip.rv = match.group(1)` $0
+snippet '((\d+)?(\\)?([A-Za-z]*)((\^|_)((\{\d+\})|(\d)))?)unt' "unit vector" rA
+\vu{`!p snip.rv = match.group(1)`}$0
+endsnippet
+
+context "math()"
+snippet "\|(.*?)\>" "ket" riA
+\ket{`!p snip.rv = match.group(1).replace('q', f'\psi').replace('f', f'\phi')`}
+endsnippet
+
+context "math()"
+snippet "(.*)\\bra{(.*?)}([^\|]*?)\>" "braket" riA
+`!p snip.rv = match.group(1)`\braket{`!p snip.rv = match.group(2)`}{`!p snip.rv = match.group(3).replace('q', f'\psi').replace('f', f'\phi')`}
+endsnippet
+
+context "math()"
+snippet comm "commutator" wA
+\comm{${1}}{${2}}$0
+endsnippet
+
+context "math()"
+snippet expv "expectation value" wA
+\expval{${1:x}}$0
+endsnippet
+
+context "math()"
+snippet expvw "expectation value wrt..." wA
+\expval{${1:x}}{${2:\Psi}}$0
+endsnippet
+
+context "math()"
+snippet grad "gradient" wA
+\grad
+endsnippet
+
+context "math()"
+snippet div "divergence" wA
+\divergence
+endsnippet
+
+context "math()"
+snippet curl "curl" wA
+\curl
+endsnippet
+
+context "math()"
+snippet lapl "laplacian" wA
+\laplacian
+endsnippet
+
+################
+# CUSTOM STUFF #
+################
+
+priority 999
+context "math()"
+snippet 'dv(\d|n)' "nth derivative" wrA
+\dv[`!p snip.rv = match.group(1)`]{${1}}{${2}}$0
+endsnippet
+
+priority 1000
+context "math()"
+snippet 'pdv(\d|n)' "nth partial derivative" wrA
+\pdv[`!p snip.rv = match.group(1)`]{${1}}{${2}}$0
 endsnippet
 
 # vim:ft=snippets:

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-for src_file in ${HOME}/.system/.[^.]*; do
+for src_file in ${HOME}/.system/[^.]*; do
   source ${src_file}
 done
 

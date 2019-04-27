@@ -4,7 +4,7 @@ export EDITOR=vim
 export BROWSER="google-chrome-stable"
 export FILE="ranger"
 export TERMINAL="gnome-terminal"
-export NOTES_DIR="~/Dropbox/Notes"
+export NOTES_DIR="~/Dropbox/1\ Notes"
 
 if [ -x /usr/bin/dircolors ]; then
   alias ls='ls --color=auto'
@@ -35,4 +35,4 @@ alias nri='rm -r node_modules && npm install'
 alias ncd='npm-check -su'
 
 alias dnotes="cd ${NOTES_DIR}"
-alias dwork="cd ~/Dropbox/3B"
+alias dwork="cd ~/Dropbox/0\ BSc_UW"

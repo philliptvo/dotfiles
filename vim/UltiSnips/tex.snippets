@@ -85,16 +85,16 @@ endsnippet
 snippet fig "Figure environment" b
 \begin{figure}[${1:htpb}]
 	\centering
-	\includegraphics[width=${2:0.8}\linewidth]{${3:name.ext}}
+	\includegraphics[width=${2:0.8}\linewidth]{${3:dir/name.ext}}
 	\caption{${3/(\w+)\/(\w+)\.(\w+)/\u$2/}$0}
 	\label{fig:${3/(\w+)\/(\w+)\.(\w+)/$2/}}
 \end{figure}
 endsnippet
 
 snippet subfig "subfigure environment" b
-\begin{subfigure}[${1}]{${2:\textwidth}}
+\begin{subfigure}[${1}]{${2:}\textwidth}
 	\centering
-	\includegraphics[height=${3:0.8}in]{${4:name.ext}}
+	\includegraphics[width=\textwidth${3}]{${4:dir/name.ext}}
 	\caption{${4/(\w+)\/(\w+)\.(\w+)/\u$2/}$0}
 	\label{fig:${4/(\w+)\/(\w+)\.(\w+)/$2/}}
 \end{subfigure}

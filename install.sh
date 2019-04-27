@@ -3,92 +3,58 @@
 set -e
 
 if [ $(dirname "$0") != "." ]; then
-  echo "$(basename "$0"): Script not called from dotfile directory." 1>&2
+  echo "Script not called from dotfile directory -> $(basename "$0")" 1>&2
   exit 1
 fi
 
-OS=$(uname)
 export DOTFILES_DIR=$(cd "$(dirname "$0")"; pwd)
 
-# sym link config files in subdirectories
 symlink() {
-  for config in "${1}"*; do
-    if [ -f "${config}" ]; then
-      targetfile="${HOME}"/.$(basename "${config}")
-      # clean up existing links
-      [ -L "${targetfile}" ] && rm "${targetfile}"
-      [ -f "${targetfile}" ] && mv "${targetfile}" "${targetfile}".old
-      ln -s "${config}" "${targetfile}"
+  for conf in $(ls | grep -v -e 'Brewfile' -e 'README' -e 'install'); do
+    target="${HOME}/.${conf}"
+    if [ ! -L "${target}" ]; then
+      echo "Linking ${conf} -> ${target}"
+      ln -s "${DOTFILES_DIR}/${conf}" "${target}"
     fi
-
-    echo "Symlinked ${config}."
   done
 }
 
-setup() {
-  for file in */;  do
-    # copy to home directory if force token exists
-    if [ ! -f "${file}.ignore" ]; then
-      # clean up directory if it already exists
-      targetpath="${HOME}/.${file}"
-      [ -d "${targetpath}" ] && rm -rf "${targetpath}"
-      cp -r "${file}" "${targetpath}"
-      echo "Copied ${file} to home directory."
-    fi
-
-  symlink "${DOTFILES_DIR}/${file}"
-  done
-}
-
-cp_configs() {
-  mkdir -p ~/.config
+config() {
+  mkdir -p "${HOME}/.config"
 
   for config in ".config/"*; do
-    targetfile=$(basename "${config}")
+    target=$(basename "${config}")
     cp -r "${config}" "${HOME}/.config/"
-    echo "Copied config files for ${targetfile}"
+    echo "Copied config files: ${target}"
   done
-}
-
-cp_scripts() {
-  mkdir -p ~/.scripts
-
-  for script in ".scripts/"*; do
-    targetfile=$(basename "${script}")
-    cp -r "${script}" "${HOME}/.scripts/"
-  done
-
-  echo "Copied scripts"
 }
 
 ##########################
 ### SCRIPT STARTS HERE ###
 ##########################
 
+OS=$(uname)
+
 # update vim spell directory if necessary
 if [ "$(diff ~/.vim/spell/en.utf-8.add vim/spell/en.utf-8.add)" != "" ]; then
+  echo "Updating spell file"
   cp ~/.vim/spell/en.utf-8.add* vim/spell/
 fi
 
-setup
-cp_configs
-cp_scripts
-
-read -p "Install vim plugins? (Y/n) " update_config
-
-if [ "$(echo ${update_config} | awk '{print tolower($0)}')" = "y" ]; then
+read -p "Install configurations? (Y/n) " update_config
+if [ "$(echo "${update_config}" | awk '{print tolower($0)}')" = "y" ]; then
+  symlink
+  config
   vim +PlugInstall +qall
 fi
 
-# Setup for MacOS
-if [ "${OS}" = "Darwin" ]; then
-  #[ -f ${HOME}/.bash_profile -o -L ${HOME}/.bash_profile ] && rm ${HOME}/.bash_profile
-  mv ${HOME}/.bashrc ${HOME}/.bash_profile
-  source ~/.bash_profile
+#############
+### MACOS ###
+#############
 
+if [ "${OS}" = "Darwin" ]; then
+  mv "${HOME}"/.bashrc "${HOME}"/.bash_profile
   read -p "Install from brewfile (Y/n)? " update_brewfile
-else
-  source ~/.bashrc
 fi
 
 if [ "${update_brewfile}" = "y" ]; then

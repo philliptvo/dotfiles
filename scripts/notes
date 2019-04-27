@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+openfile() {
+  filename="$(basename -- ${1})"
+  ext="$(echo ${filename} | cut -f 2 -d '.')"
+
+  case "${ext}" in 
+  "pdf")
+    open "${1}"
+    ;;
+  "md")
+    vim "${1}"
+    ;;
+  esac
+}
+
+openfile $(du -a ~/Dropbox/1_Notes | awk '{print $2}' | fzf | sed "s|~|$HOME|")
