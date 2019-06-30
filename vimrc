@@ -2,7 +2,10 @@
 
 " PLUGINS {{{
 call plug#begin('~/.vim/plugged')
+
 " Git
+Plug 'airblade/vim-gitgutter'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tpope/vim-fugitive'
 " Text Editing
 Plug 'tpope/vim-surround'
@@ -15,13 +18,11 @@ Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'vim-pandoc/vim-pandoc-after'
 Plug 'dhruvasagar/vim-table-mode'
 Plug 'dkarter/bullets.vim'
-" FZF
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': '.install --all' }
-Plug 'junegunn/fzf.vim'
-" Miscellaneous
-Plug 'w0rp/ale'
+" Navigating
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'scrooloose/nerdtree'
+Plug 'mileszs/ack.vim'
+
 call plug#end()
 " }}}
 " LEADER {{{1
@@ -36,55 +37,51 @@ nnoremap <leader>5 ^i##### <esc>
 " }}}
 " Notes {{{2
 nnoremap <leader>pp :!pandoc --pdf-engine=lualatex --filter pandoc-citeproc --bibliography=%:r.bib -H ~/resources/notes.tex -o %:r.pdf %<CR>
-nnoremap <leader>o :!open %:r.pdf 2>&1 > /dev/null &<CR><CR>
 " }}}
 " Quickediting {{{2
 nnoremap <leader>ev <C-w>s<C-w>j<C-w>L:e $MYVIMRC<CR>
-nnoremap <leader>es <C-w>s<C-w>j<C-w>L:e ~/.vim/UltiSnips/<CR>
-nnoremap <leader>ed <C-w>s<C-w>j<C-w>L:e ~/Dropbox/<CR>
-nnoremap <leader>ew <C-w>s<C-w>j<C-w>L:e ~/Dropbox/3B/<CR>
-nnoremap <leader>en <C-w>s<C-w>j<C-w>L:e ~/Dropbox/Notes<CR>
 " }}}
-" Misc {{{2
-nnoremap <leader><space> :nohlsearch<CR>
-nnoremap <leader>s :set spell!<cr>
+" Files {{{2
 nnoremap <leader>w :w<cr>
 nnoremap <leader>q :q<cr>
 nnoremap <leader>Q :q!<cr>
-nnoremap <leader>Z :wq<cr>
+nnoremap <leader>Z :wq!<cr>
 " }}}
 " }}}
-" FILETYPES {{{
-filetype plugin on
-
+" AUTOGROUPS {{{
 augroup filetypes
     au!
 
-    au BufNewFile,BufRead *.md setlocal ft=markdown.tex spell ts=2 sts=2 sw=2 et ai si
+    au BufNewFile,BufRead *.md setlocal ft=markdown.tex
 
     au Filetype gitcommit setlocal spell
 
-    au FileType html,xhtml,xml,css setlocal ts=2 sts=2 sw=2 et ai
-    au FileType javascript setlocal ts=2 sts=2 sw=2 et ai si noci 
-
     au FileType python setlocal ts=4 sts=4 sw=4 et ai si cinwords=if,elif,else,for,while,try,except,finally,def,class foldmethod=indent foldlevel=99
+
+    au FileType c,cpp let b:AutoPairs = AutoPairsDefine({'/*' : '*/'})
 
     au FileType pandoc setlocal syn=off
     au FileType pandoc let b:autopairs_enabled = 0
+augroup END
 
+augroup NERDTree
+    au!
+    au StdinReadPre * let s:std_in=1
+    au VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
     au BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+augroup END
 
-    au FileType sh setlocal ts=2 sts=2 sw=2 et ai
+augroup QuickfixList
+    au!
+    au BufEnter * if (winnr("$") == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix") | q | endif
 augroup END
 " }}}
-" THEME & LAYOUT {{{
-colorscheme badwolf
-set number relativenumber  " show hybrid line numbers
-set showcmd " show last command in bottom bar
-set cursorline " highlight current line
+" OPTIONS {{{1
+" Basics {{{2
+filetype plugin on
+
 syntax enable " enable syntax processing
-" }}}
-" MISC {{{
+
 set nocompatible
 
 set wildmenu " visual autocomplete for command menu
@@ -92,32 +89,35 @@ set lazyredraw " redraw only when we need to
 set showmatch " highlight matching [{()}]
 set cursorline
 
+set number relativenumber  " show hybrid line numbers
+set showcmd " show last command in bottom bar
+set cursorline " highlight current line
+
 set modeline
 set modelines=1
 
 set backspace=2 " backspace over everything
 set scrolloff=5
 
+set nobackup
 set noswapfile
 
 let g:tex_flavor='latex'
-
-" jk is escape (only for insert mode)
-inoremap jk <esc>
-inoremap JK <esc>
-
-" Spellcheck
+" }}}
+" Spellcheck {{{2
 set spelllang=en
 inoremap <C-l> <C-g>u<Esc>[s1z=`]a<C-g>u
 " }}}
-" SEARCHING {{{
+" Search {{{2
+set ignorecase
 set incsearch
-set hlsearch
+
+nnoremap <leader><space> :noh<cr>
 " }}}
-" TEXT FORMATTING {{{
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
+" Text Formatting {{{2
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
 set expandtab
 set autoindent
 
@@ -126,7 +126,25 @@ set listchars=tab:▸\ ,eol:¬
 
 set showbreak=↪
 " }}}
+" Folding {{{2
+set foldenable
+set foldmethod=indent
+set foldlevelstart=10
+set foldnestmax=10
+
+" space open/closes folds
+nnoremap <space> za
+nnoremap <leader>z zMzvzz
+" }}}
+" }}}
+" THEME {{{
+colorscheme gruvbox
+set background=dark
+" }}}
 " NAVIGATING {{{
+inoremap jk <esc>
+inoremap JK <esc>
+
 " move vertically by visual line (only in normal mode)
 nnoremap j gj
 nnoremap k gk
@@ -142,31 +160,14 @@ nnoremap H ^
 nnoremap L g_
 
 " Open new line above/below current line
-"nnoremap o o<esc>
-"nnoremap O O<esc>
-" }}}
-" FOLDING {{{
-set foldenable
-set foldmethod=indent
-set foldlevelstart=10
-set foldnestmax=10
+nnoremap o o<esc>
+nnoremap O O<esc>
 
-" space open/closes folds
-nnoremap <space> za
-nnoremap <leader>z zMzvzz
+" Quickfix List
+nnoremap ]q :cnext<cr>
+nnoremap [q :cprev<cr>
+nnoremap <leader>c :cclose<bar>lclose<cr>
 " }}}
-" EXTENDED TEXT OBJECTS {{{
-let s:items = [ "*", "_", "$" ]
-for item in s:items
-    exe "nnoremap yi".item." T".item."yt".item
-    exe "nnoremap ya".item." F".item."yf".item
-    exe "nnoremap ci".item." T".item."ct".item
-    exe "nnoremap ca".item." F".item."cf".item
-    exe "nnoremap di".item." T".item."dt".item
-    exe "nnoremap da".item." F".item."df".item
-    exe "nnoremap vi".item." T".item."vt".item
-    exe "nnoremap va".item." F".item."vf".item
-endfor
 " FUNCTIONS {{{1
 " Fix Spelling Error {{{2
 function! FixLastSpellCheckError()
@@ -175,21 +176,8 @@ endfunction
 
 nnoremap <leader>sp :call FixLastSpellCheckError()<CR>
 "}}}
-" Toggle Pandoc Auto-compile {{{2
-function! ToggleAutoCompile()
-    if g:pandoc#command#autoexec_on_writes
-        let g:pandoc#command#autoexec_on_writes = 0
-        echo "pandoc auto-compiling off."
-    else
-        let g:pandoc#command#autoexec_on_writes = 1
-        echo "pandoc auto-compiling on."
-    endif
-endfunction
-
-nnoremap <silent> <leader>ac :call ToggleAutoCompile()<CR>
 " }}}
-" }}}
-" TMUX {{{
+" PANES {{{
 if exists('$TMUX')
   function! TmuxOrSplitSwitch(wincmd, tmuxdir)
     let previous_winnr = winnr()
@@ -216,12 +204,11 @@ else
 endif
 " }}}
 " PLUGINS {{{1
-" auto-pairs {{{2
-let g:AutoPairsShortcutToggle = '<leader>ap'
+" vim-gitgutter {{{2
+set updatetime=100
 " }}}
 " UltiSnips {{{2
 nnoremap <leader>ue :UltiSnipsEdit<cr>
-nnoremap <leader>ur :call UltiSnips#RefreshSnippets()<cr>
 
 let g:UltiSnipsSnippetDir="~/dotfiles/vim/UltiSnips"
 let g:UltiSnipsEditSplit="vertical"
@@ -238,22 +225,22 @@ let g:pandoc#after#modules#enabled = ["ultisnips", "tablemode"]
 
 nnoremap <leader>pd :pandoc 
 " }}}
-" fzf {{{2
-map <leader>f :FZF<CR>
-" }}}
-" NERDTree {{{2
-map <C-n> :NERDTreeToggle<CR>
-" }}}
-" ALE {{{2
-let g:ale_sign_column_always = 1
-map <leader>at :ALEToggle<cr>
-" }}}
 " Bullets {{{
 let g:bullets_enabled_file_types = [
     \ 'markdown',
     \ 'text',
     \ 'gitcommit',
     \]
+" }}}
+" NERDTree {{{2
+let NERDTreeQuitOnOpen = 1
+let NERDTreeAutoDeleteBuffer = 1
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
+map <C-n> :NERDTreeToggle<CR>
+" }}}
+" Ack.vim {{{
+nnoremap <leader>a :Ack! -i<space>
 " }}}
 " }}}
 
