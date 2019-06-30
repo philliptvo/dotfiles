@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/bin/sh
 
 killall mbsync &>/dev/null
 mbsync -a -q

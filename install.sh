@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 set -e
 
@@ -33,8 +33,6 @@ config() {
 ### SCRIPT STARTS HERE ###
 ##########################
 
-OS=$(uname)
-
 # update vim spell directory if necessary
 if [ "$(diff ~/.vim/spell/en.utf-8.add vim/spell/en.utf-8.add)" != "" ]; then
   echo "Updating spell file"
@@ -46,18 +44,4 @@ if [ "$(echo "${update_config}" | awk '{print tolower($0)}')" = "y" ]; then
   symlink
   config
   vim +PlugInstall +qall
-fi
-
-#############
-### MACOS ###
-#############
-
-if [ "${OS}" = "Darwin" ]; then
-  mv "${HOME}"/.bashrc "${HOME}"/.bash_profile
-  read -p "Install from brewfile (Y/n)? " update_brewfile
-fi
-
-if [ "${update_brewfile}" = "y" ]; then
-  brew tap Homebrew/bundle
-  brew bundle
 fi
