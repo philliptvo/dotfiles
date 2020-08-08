@@ -1,0 +1,1 @@
+set theme_color_scheme gruvbox

@@ -1,7 +1,0 @@
-text/plain; vim %s ;
-#text/html; open %s ;
-text/html; w3m -I %{charset} -T text/html; copiousoutput ;
-
-image/*; open %s
-
-application/pdf; open %s ;

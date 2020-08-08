@@ -1,9 +1,19 @@
 Description
-===========
-My compendium of configuration files
+-----------
+
+A compendium of my configuration files for macOS
+
+Features
+--------
+
+- neovim
+- yabai (twm)
+- skhd (hotkeys)
+- Ubersicht (statusbar)
+- fish (terminal); with _oh-my-fish_ framework
 
 Installation
-============
+------------
 
 ```sh
 $ git clone git@github.com:philliptvo/dotfiles.git
@@ -11,12 +21,11 @@ $ cd dotfiles
 $ ./install.sh
 ```
 
-MacOS
------
+Post Installation
+------------------
 
-To install binaries and other applications with Homebrew, run:
+To install vim plugins, run following command in vim:
 
-```sh
-$ brew tap Homebrew/bundle
-$ brew bundle
+```vim
+:PlugInstall
 ```

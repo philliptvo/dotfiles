@@ -3,7 +3,7 @@
   email = phillip.t.vo@gmail.com
 
 [core]
-  editor = vim
+  editor = nvim
 
 [alias]
   aa = add --all

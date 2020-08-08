@@ -1,47 +1,41 @@
 #!/bin/sh
 
-set -e
+echo "Installing Homebrew"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)" 
 
-if [ $(dirname "$0") != "." ]; then
-  echo "Script not called from dotfile directory -> $(basename "$0")" 1>&2
-  exit 1
-fi
+echo "Installing Homebrew dependencies"
+brew tap homebrew/cask-fonts
+brew cask install font-fira-code-nerd-font
+brew cask install ubersicht
+brew install fish
+brew install python
+brew install pip3
+brew install neovim
+brew install fzf
+brew install jq
+brew install htop
+brew install jesseduffield/lazygit/lazygit
+brew install jesseduffield/lazydocker/lazydocker
+brew install koekeishiya/formulae/yabai
+brew install koekeishiya/formulae/skhd
+sudo pip3 install pywal
+brew services start yabai
+brew services start skhd
+brew update
+brew services restart --all
 
-export DOTFILES_DIR=$(cd "$(dirname "$0")"; pwd)
+echo "Installing dotfiles"
+cp -r scripts $HOME/scripts
+cp -r config $HOME/.config
+cp yabairc $HOME/.yabairc
+cp skhdrc $HOME/.skhdrc
+cp gitconfig $HOME/.gitconfig
 
-symlink() {
-  for conf in $(ls | grep -v -e 'Brewfile' -e 'README' -e 'install'); do
-    target="${HOME}/.${conf}"
-    if [ ! -L "${target}" ]; then
-      echo "Linking ${conf} -> ${target}"
-      ln -s "${DOTFILES_DIR}/${conf}" "${target}"
-    fi
-  done
-}
+git clone git@github.com:Jean-Tinland/simple-bar.git $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar
 
-config() {
-  mkdir -p "${HOME}/.config"
+echo "Installing oh-my-fish"
+/bin/bash -c "$(curl -L https://get.oh-my.fish | fish)"
 
-  for config in ".config/"*; do
-    target=$(basename "${config}")
-    cp -r "${config}" "${HOME}/.config/"
-    echo "Copied config files: ${target}"
-  done
-}
-
-##########################
-### SCRIPT STARTS HERE ###
-##########################
-
-# update vim spell directory if necessary
-if [ "$(diff ~/.vim/spell/en.utf-8.add vim/spell/en.utf-8.add)" != "" ]; then
-  echo "Updating spell file"
-  cp ~/.vim/spell/en.utf-8.add* vim/spell/
-fi
-
-read -p "Install configurations? (Y/n) " update_config
-if [ "$(echo "${update_config}" | awk '{print tolower($0)}')" = "y" ]; then
-  symlink
-  config
-  vim +PlugInstall +qall
-fi
+echo "--------------------------------------------------"
+echo "Next Steps:"
+echo "  Open vim and use :PlugInstall to install plugins"
