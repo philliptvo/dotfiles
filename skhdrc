@@ -1,10 +1,10 @@
 # open terminal, vscode, and chrome with shortcuts
 cmd - return : open -n /Applications/Alacritty.app
 cmd + shift - return : code
-alt - return : open -a '/Applications/Google Chrome.app'
+alt - return : open -a '/Applications/Firefox.app'
 
 # focus window
-alt - x : yabai -m window --focus recent
+#alt - x : yabai -m window --focus recent
 alt - h : yabai -m window --focus west
 alt - j : yabai -m window --focus south
 alt - k : yabai -m window --focus north
@@ -98,13 +98,13 @@ shift + cmd - w : yabai -m window --resize top:0:30
 shift + cmd - d : yabai -m window --resize right:-30:0
 
 # rotate tree
-cmd + alt - r : yabai -m space --rotate 90
+alt - r : yabai -m space --rotate 90
 
 # mirror tree y-axis
-cmd + alt - y : yabai -m space --mirror y-axis
+alt - y : yabai -m space --mirror y-axis
 
 # mirror tree x-axis
-cmd + alt - x : yabai -m space --mirror x-axis
+alt - x : yabai -m space --mirror x-axis
 
 # toggle window fullscreen zoom
 alt - f : yabai -m window --toggle zoom-fullscreen
@@ -127,7 +127,7 @@ alt - t : yabai -m window --toggle float && \
            yabai -m window --grid 4:1:4:4:0:0
 
 # toggle back from picture in picture mode
- shift + alt - p : yabai -m window --toggle float
+shift + alt - p : yabai -m window --toggle float
 
 # toggle topmost (keep above other windows)
 alt - o : yabai -m window --toggle topmost

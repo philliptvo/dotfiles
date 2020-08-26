@@ -1,3 +1,3 @@
-function ----description 'Check the weather'
+function weather --description 'Check the weather'
   curl wttr.in
 end
