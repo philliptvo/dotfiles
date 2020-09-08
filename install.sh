@@ -36,6 +36,7 @@ cp -r -v scripts/. $HOME/scripts
 cp -r -v config/. $HOME/.config
 cp -v yabairc $HOME/.yabairc
 cp -v skhdrc $HOME/.skhdrc
+cp -v tmux.conf $HOME/.tmux.conf
 cp -v gitconfig $HOME/.gitconfig
 
 echo "+------------------------+"
