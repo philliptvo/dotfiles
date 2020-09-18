@@ -16,7 +16,7 @@ yabai -m config mouse_action2                resize
 
 # Borders 
 yabai -m config window_border on | off
-yabai -m config window_border_width 3
+yabai -m config window_border_width 1
 yabai -m config active_window_border_color 0xff775759
 yabai -m config normal_window_border_color 0xff555555
 
@@ -30,8 +30,8 @@ yabai -m config right_padding                30   #30
 yabai -m config window_gap                   30   #30
 
 # Running through float windows
-yabai -m config --space 5 layout             float
-yabai -m config --space 6 layout             float
+#yabai -m config --space 5 layout             float
+#yabai -m config --space 6 layout             float
 
 # Rules for specific apps to launch and be managed by yabai
 yabai -m window --toggle border
