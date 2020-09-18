@@ -18,6 +18,7 @@ brew install fzf
 brew install jq
 brew install htop
 brew install gs
+brew install neofetch
 brew install jesseduffield/lazygit/lazygit
 brew install jesseduffield/lazydocker/lazydocker
 brew install koekeishiya/formulae/yabai
