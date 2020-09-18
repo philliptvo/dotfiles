@@ -275,11 +275,11 @@ let g:coc_snippet_prev = '<S-TAB>'
 " coc-java needs a valid JVM filepath defined in coc-settings
 " coc-ccls needs ccls (available on aur)
 " coc-eslint needs eslint npm package installed globally
+" FIXME: removed 'coc-ccls'; module not working. See https://github.com/neoclide/coc.nvim/issues/2088
 let g:coc_global_extensions = [
       \'coc-html', 
       \'coc-xml', 
       \'coc-java', 
-      \'coc-ccls', 
       \'coc-powershell', 
       \'coc-r-lsp', 
       \'coc-vimlsp', 

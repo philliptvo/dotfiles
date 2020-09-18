@@ -44,10 +44,8 @@ echo "|Installing Ubersicht Bar|"
 echo "+------------------------+"
 if [ -d "$HOME/Library/Application Support/Übersicht/widgets/simple-bar" ]; then
   rm -rf "$HOME/Library/Application Support/Übersicht/widgets/simple-bar" 
-  git clone git@github.com:Jean-Tinland/simple-bar.git "$HOME/Library/Application Support/Übersicht/widgets/simple-bar"
-else
-  git clone git@github.com:Jean-Tinland/simple-bar.git "$HOME/Library/Application Support/Übersicht/widgets/simple-bar"
 fi
+git clone git@github.com:Jean-Tinland/simple-bar.git "$HOME/Library/Application Support/Übersicht/widgets/simple-bar"
 
 # Use pywal colors for Ubersicht
 cat "$HOME/Library/Application Support/Übersicht/widgets/simple-bar/lib/styles/Theme.js" | awk '/^export const Theme/{print "/*"}1;/^}/{print "*/"}' | sed '/^\/\/ export { Theme } /s|^// ||' | tee "$HOME/Library/Application Support/Übersicht/widgets/simple-bar/lib/styles/Theme.js"
