@@ -9,10 +9,15 @@ echo "+--------------------------------+"
 echo "|Installing Homebrew dependencies|"
 echo "+--------------------------------+"
 brew tap homebrew/cask-fonts
+brew tap mongodb/brew
 brew cask install font-fira-code-nerd-font
-brew cask install ubersicht
+brew cask install font-fontawesome
+brew install mongodb-community
+brew install fzf
+brew install ripgrep
+brew install --HEAD universal-ctags/universal-ctags/universal-ctags
 brew install fish
-brew install python
+brew install pyenv
 brew install neovim
 brew install fzf
 brew install jq
@@ -23,12 +28,16 @@ brew install jesseduffield/lazygit/lazygit
 brew install jesseduffield/lazydocker/lazydocker
 brew install koekeishiya/formulae/yabai
 brew install koekeishiya/formulae/skhd
+brew install cmacrae/formulae/spacebar
 sudo pip3 install pywal
 sudo pip3 install pywalfox
 brew services start yabai
 brew services start skhd
 brew update
 brew services restart --all
+
+# To install useful key bindings and fuzzy completion:
+$(brew --prefix)/opt/fzf/install
 
 echo "+-------------------+"
 echo "|Installing dotfiles|"
@@ -37,6 +46,7 @@ cp -r -v scripts/. $HOME/scripts
 cp -r -v config/. $HOME/.config
 cp -v yabairc $HOME/.yabairc
 cp -v skhdrc $HOME/.skhdrc
+cp -v spacbarrc $HOME/.spacbarrc
 cp -v tmux.conf $HOME/.tmux.conf
 cp -v gitconfig $HOME/.gitconfig
 

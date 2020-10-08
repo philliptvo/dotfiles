@@ -15,7 +15,7 @@ yabai -m config mouse_action1                move
 yabai -m config mouse_action2                resize
 
 # Borders 
-yabai -m config window_border on | off
+#yabai -m config window_border on | off
 yabai -m config window_border_width 1
 yabai -m config active_window_border_color 0xff775759
 yabai -m config normal_window_border_color 0xff555555
@@ -34,28 +34,8 @@ yabai -m config window_gap                   30   #30
 #yabai -m config --space 6 layout             float
 
 # Rules for specific apps to launch and be managed by yabai
-yabai -m window --toggle border
+#yabai -m window --toggle border
 yabai -m rule --add app="^System Preferences$" manage=off
 yabai -m rule --add app=Übersicht manage=off
-yabai -m rule --add app=Firefox space=1
-yabai -m rule --add app=Code space=2
-yabai -m rule --add app=Notion space=3
-yabai -m rule --add app=Discord space=4
-
-# Signals for when to update Übersicht
-yabai -m signal --add event=space_changed \
-  action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-yabai -m signal --add event=space_changed \
-  action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
-yabai -m signal --add event=window_title_changed \
-    action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
-yabai -m signal --add event=application_activated \
-    action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
-yabai -m signal --add event=application_launched \
-    action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-yabai -m signal --add event=application_terminated \
-    action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-yabai -m signal --add event=window_destroyed \
-    action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
 
 echo "yabai configuration loaded.."
