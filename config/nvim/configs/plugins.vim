@@ -64,9 +64,6 @@ Plug 'vim-airline/vim-airline-themes'
 " Tabular auto-align
 Plug 'godlygeek/tabular'
 
-" Comfy scroll
-Plug 'yuttie/comfortable-motion.vim'
-
 " Add DevIcons
 Plug 'ryanoasis/vim-devicons'
 
