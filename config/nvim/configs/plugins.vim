@@ -16,6 +16,9 @@ if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
 endif
 call plug#begin('~/.vim/plugged')
 
+" LaTeX support
+Plug 'lervag/vimtex'
+
 " Git wrapper
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
@@ -80,9 +83,6 @@ Plug 'junegunn/vim-emoji'
 
 " goyo distraction free mode
 Plug 'junegunn/goyo.vim'
-
-" LaTeX support
-Plug 'lervag/vimtex'
 
 " Wal theme
 Plug 'dylanaraps/wal.vim'
