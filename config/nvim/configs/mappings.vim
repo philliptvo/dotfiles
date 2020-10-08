@@ -202,3 +202,11 @@ nmap <Leader>md <Plug>MarkdownPreviewToggle
 
 " Table mode toggle
 nmap <silent> <Leader>tm :TableModeToggle<cr>
+
+
+" FZF
+map <C-f> :Files<cr>
+map <leader>b :Buffers<cr>
+nnoremap <leader>g :Rg<cr>
+nnoremap <leader>t :Tags<CR>
+nnoremap <leader>m :Marks<CR>

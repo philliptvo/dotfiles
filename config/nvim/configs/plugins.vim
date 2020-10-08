@@ -104,4 +104,8 @@ Plug 'ChristianChiarulli/codi.vim'
 " Easy tables in vim
 Plug 'dhruvasagar/vim-table-mode'
 
+" FZF
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
 call plug#end()
