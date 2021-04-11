@@ -1,0 +1,62 @@
+#!/bin/sh
+
+# autoload scripting additions to the macOS 11 (Big Sur)
+sudo yabai --load-sa
+yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+
+# global settings
+yabai -m config mouse_follows_focus          off
+yabai -m config focus_follows_mouse          off
+yabai -m config window_placement             second_child
+yabai -m config window_topmost               on
+yabai -m config window_opacity               on
+#Cannot set due to a bug in Big Sur
+# yabai -m config window_opacity_duration      0.0
+yabai -m config window_shadow                on
+# yabai -m config active_window_opacity        0.90
+yabai -m config normal_window_opacity        0.80
+yabai -m config split_ratio                  0.50
+yabai -m config auto_balance                 off
+yabai -m config mouse_modifier               fn
+yabai -m config mouse_action1                move
+yabai -m config mouse_action2                resize
+
+# general space settings
+yabai -m config layout                       bsp
+yabai -m config external_bar                 all:28:0
+yabai -m config top_padding                  30   #30
+yabai -m config bottom_padding               30   #30
+yabai -m config left_padding                 30   #30
+yabai -m config right_padding                30   #30
+yabai -m config window_gap                   30   #30
+
+# pywal scheme - update if needed
+source ~/.cache/wal/colors.sh
+
+# yabai template colours
+CBACK=$(echo $background | sed 's/#//')
+CFORE=$(echo $foreground | sed 's/#//')
+CACTV=$(echo $color3 | sed 's/#//')
+CNORM=$(echo $color1 | sed 's/#//')
+CINSE=$(echo $foreground | sed 's/#//')
+
+yabai -m config status_bar                    on
+yabai -m config status_bar_background_color   0xff$CBACK
+yabai -m config status_bar_foreground color   0xff$CFORE
+
+# Borders 
+yabai -m config window_border                 on | off
+yabai -m config window_border_width           6
+yabai -m config active_window_border_color    0xff$CACTV
+yabai -m config normal_window_border_color    0xff$CNORM
+yabai -m config insert_window_border_color    0xff$CINSE
+
+# Running through float windows
+#yabai -m config --space 5 layout             float
+#yabai -m config --space 6 layout             float
+
+# Rules for specific apps to launch and be managed by yabai
+yabai -m window --toggle border
+yabai -m rule --add app="^System Preferences$" manage=off
+
+echo "yabai configuration loaded.."

@@ -1,28 +1,33 @@
-Description
------------
+# Description
 
-A compendium of my configuration files for macOS
+A compendium of my configuration files for MacOS and Linux.
 
-Features
---------
+# Features
 
-- neovim
-- yabai (twm)
-- skhd (hotkeys)
-- Ubersicht (statusbar)
-- fish (terminal); with _oh-my-fish_ framework
++ editor
+  + __neovim__
++ window manager(s)
+  + __yabai__
+  + __skhd__ (hotkeys)
++ shell
+  + __zsh__
+  + __oh-my-zsh__ (plugin manager)
++ terminal
+  + __kitty__
+  + __tmux__
++ other
+  + __git__
+  + newsboat
 
-Installation
-------------
+# To install
 
 ```sh
 $ git clone git@github.com:philliptvo/dotfiles.git
 $ cd dotfiles
-$ ./install.sh
+$ ./setup.sh
 ```
 
-Post Installation
-------------------
+# Post Installation
 
 To install vim plugins, run following command in vim:
 

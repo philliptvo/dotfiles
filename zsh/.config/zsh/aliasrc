@@ -1,0 +1,6 @@
+# Verbosity and sane settings
+alias \
+      cp="cp -iv" \
+      mv="mv -iv" \
+      rm="rm -v" \
+      mkd="mkdir -pv"

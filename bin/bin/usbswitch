@@ -1,0 +1,41 @@
+#!/bin/sh
+## Usage: usbswitch [options] ADD|REMOVE
+##
+## Switch monitor input from usb-c to DP. ADD switches to usb-c and REMOVE
+##  switches to DP
+##
+## Options
+##  -h, --help  Display usage.
+
+usage() {
+  [ "$*" ] && echo "$0: $*"
+  sed -n '/^##/,/^$/s/^## \{0,1\}\\p' "$0"
+  exit 2
+} 2>/dev/null
+
+while [ $# -gt 0  ]; do
+  case $1 in
+    (-h|--help)
+      usage 2>&1
+      break
+      ;;
+    (-*) usage "$1 unknown option"
+      ;;
+    (*)
+      break
+      ;;
+  esac
+done
+
+/bin/echo `date` $1 >> /tmp/usbswitch.log
+
+if [ "x$1" == "xADD" ]; then
+  VID="27"
+elif [ "x$1" == "xREMOVE" ]; then
+  VID="15"
+else
+  /bin/echo `date` "unknown operation: " $1 >> /tmp/usbswitch.log
+fi
+
+/usr/local/bin/ddcctl -d 1 -i ${VID}
+exit $?

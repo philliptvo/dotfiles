@@ -1,0 +1,93 @@
+#!/bin/sh
+## Usage: tmx [options]
+##
+## Creates configurable tmux sessions and attaches to the last created session
+##
+## Options
+##  -h, --help  Display usage.
+##  -u          Unicus session.
+##  -w          Work session.
+##  -p          Personal session.
+
+PROJECTS="$HOME/personal/projects"
+UNICUS="$HOME/personal/projects/Unicus"
+WORK="$HOME/work"
+
+createSession() {
+  session=$1
+  window=$2
+  shift
+  shift
+
+  cmd="tmux new -s $session -d -n $window $@ > /dev/null 2>&1"
+
+  echo "Creating session: $cmd"
+  eval $cmd
+}
+
+createWindow() {
+  session=$1
+  window=$2
+  shift
+  shift
+  hasWindow=$(tmux list-windows -t $session | grep "$window")
+  if [ -z "$hasWindow" ]; then
+    cmd="tmux neww -t $session: -n $window -d"
+    if [ $# -gt 0 ]; then
+      cmd="$cmd $@"
+    fi
+    echo "Creating window: $cmd"
+    eval $cmd
+  fi
+}
+
+createPane() {
+  session=$1
+  window=$2
+  shift
+  shift
+  hasWindow=$(tmux list-windows -t $session | grep "$window")
+  if [ ! -z "$hasWindow" ]; then
+    cmd="tmux splitw -t $session:$window"
+    if [ $# -gt 0 ]; then
+      cmd="$cmd $@"
+    fi
+    echo "Creating pane: $cmd"
+    eval $cmd
+  fi
+}
+
+while [ $# -gt 0 ]; do
+  cur=$1
+  shift
+
+  case "$cur" in
+    "-u")
+      createSession Unicus main -c $UNICUS
+      createWindow Unicus client -c $UNICUS/client "npm start"
+      createWindow Unicus server -c $UNICUS/server "heroku logs --tail -a unicusapp"
+      sess_name='Unicus'
+      ;;
+    "-w")
+      createSession Work main -c $WORK
+      createWindow Work cs5010 -c $WORK/cs5010
+      createWindow Work cs5800 -c $WORK/cs5800
+      sess_name='Work'
+      ;;
+    "-p")
+      createSession Personal main 'cmatrix'
+      createPane Personal main -c $HOME 'ranger'
+      createPane Personal main -hfc $HOME
+      createWindow Personal notes -c $PROJECTS/Utilities/notes
+      createWindow Personal dev -c $PROJECTS
+      createWindow Personal ttrv 'ttrv'
+      createWindow Personal rss 'newsboat'
+      sess_name='Personal'
+      ;;
+    *)
+      echo "Unavailable command... $curr"
+      exit 1
+  esac
+done
+
+tmux a -t "${sess_name}"

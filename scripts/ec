@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-du -a ~/dotfiles | awk '{print $2}' | fzf | sed "s|~|$HOME|" | xargs -o "$EDITOR"

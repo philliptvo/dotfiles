@@ -1,0 +1,93 @@
+#!/bin/sh
+## Usage: zp [options] [files...]
+##
+## Archiving utility with zip
+##
+## Options
+##  -h    Displays usage.
+##  -v    Displays this script's version.
+##  -c    Cleans the files from the target archive.
+##  -d    Performs a dry run of archive expansion.
+##  -n    Name of the new archive (can only be used when no other flag is used).
+##  -u    Expands archive file.
+
+__ScriptVersion="0.1"
+ARCHIVE="archive.zip"
+REZIP=false
+
+usage() {
+  [ "$*" ] && echo "$0: $*"
+  sed -n '/^##/,/^$/s/^## \{0,1\}//p' "$0"
+} 2>/dev/null
+
+clean() {
+  # Target archive to clean up
+  TARGET=$1
+
+  # Get files in archive
+  PURGE=(`unzip -t $TARGET | awk 'print $2' | xargs echo`)
+  COUNT=${#PURGE[@]}
+
+  # Item at 0 is original archive file
+  while [COUNT -gt 0]; do
+    echo -e "Deleting ${PURGE[${COUNT}]}"
+    rm -r "${PURGE[${COUNT}]}"
+    COUNT=$((COUNT - 1))
+  done
+}
+
+# ---- Script starts here ----
+if [ $# -eq 0 ]; then
+  usage; exit 0
+fi
+
+while [ $# -gt 0 ] ; do
+  opt=$1
+
+  case $opt in
+    -h | --help )
+      usage; exit 0
+      ;;
+    -v | --version )
+      echo "$0 -- Version ${__ScriptVersion}"; exit 0
+      ;;
+    -c )
+      clean $2; exit 0
+      ;;
+    -d )
+      unzip -t $2; exit 0
+      ;;
+    -n )
+      ARCHIVE=$2; shift 2
+      ;;
+    -r )
+      REZIP=true; shift
+      ;;
+    -u )
+      unzip $2; exit 0
+      ;;
+    -* )
+      echo "  Option does not exist : $OPTARG\n"
+      usage; exit 1
+      ;;
+    * )
+      break
+      ;;
+  esac
+done
+
+# Archive files if provided
+if [ $# -gt 0 ]; then
+  # Remove if rezip option set
+  if [ -f "${ARCHIVE}" ]; then
+    if [ "${REZIP}" = true ]; then
+      rm "${ARCHIVE}" && echo "  Removed old archive.\n"
+    else
+      echo "  Archive file already exists.\n"
+      exit 2
+    fi
+  fi
+
+  echo "  Archiving files..."
+  zip -r -X "${ARCHIVE}" "$@"
+fi
