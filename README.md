@@ -29,8 +29,21 @@ $ ./setup.sh
 
 # Post Installation
 
-To install vim plugins, run following command in vim:
+## Install plugins
 
 ```vim
-:PlugInstall
+:PackerInstall
+```
+
+## Setup LSP
+
+### Lua
+
+Instructions to install lua language server
+[here](https://github.com/sumneko/lua-language-server/wiki/Build-and-Run-(Standalone))
+
+### Python
+
+```sh
+npm i -g pyright
 ```
