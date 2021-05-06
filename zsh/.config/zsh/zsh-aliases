@@ -1,0 +1,31 @@
+# Verbosity and sane settings
+alias \
+      cp="cp -iv" \
+      mv="mv -iv" \
+      rm="rm -v" \
+      mkd="mkdir -pv"
+
+# Traversing directories
+alias \
+  ..="cd .." \
+  ...="cd ../.." \
+  ....="cd ../../.." \
+  -="cd -"
+
+# Grep
+alias \
+  grep="grep --color=auto" \
+  egrep="egrep --color=auto" \
+  fgrep="fgrep --color=auto"
+
+# Distro-specific
+case "$(uname -s)" in
+  Darwin)
+    alias l="ls -alG"
+    ;;
+  Linux)
+    alias l="ls -al --color=auto"
+    ;;
+  *)
+    ;;
+esac
